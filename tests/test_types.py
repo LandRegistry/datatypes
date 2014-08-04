@@ -1,11 +1,13 @@
 import unittest
 
-from model.property import Property
+from datatypes.address import Address
 
 
 class TestTypes(unittest.TestCase):
-    def test_should_fail(self):
-        pass
+    def test_can_validate_address_structure(self):
+        address = Address(line_one = "foo")
+        print address.data
+        self.assertEquals(1,2)
 
 
 
