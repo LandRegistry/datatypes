@@ -1,12 +1,11 @@
 import unittest
 
-import sys
+from model.property import Property
 
 
 class TestTypes(unittest.TestCase):
-    def __init__(self):
-        print "creating path"
+    def test_should_fail(self):
+        pass
 
-        for d in sys.path:
-            print d
+
 
