@@ -1,5 +1,6 @@
 from voluptuous import MultipleInvalid
 
+
 def filter_none(params):
     return {k: v for k, v in params.iteritems() if v is not None}
 
@@ -7,8 +8,10 @@ def filter_none(params):
 class NoSchemaException(Exception):
     pass
 
+
 class SchemaInvalidException(Exception):
     pass
+
 
 class LandRegistryDatatype(object):
     def __init__(self, data):
@@ -30,4 +33,3 @@ class LandRegistryDatatype(object):
             self.schema(self.data)
         except MultipleInvalid:
             raise SchemaInvalidException
-
