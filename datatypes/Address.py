@@ -1,4 +1,4 @@
-from voluptuous import Schema
+from voluptuous import Schema, Required, Optional
 
 from datatypes.core import LandRegistryDatatype
 
@@ -9,5 +9,10 @@ class Address(LandRegistryDatatype):
 
     def schema(self):
         return Schema({
-
+            Required('line_one'): str,
+            Optional('line_two'): str,
+            Optional('line_three'): str,
+            Optional('line_four'): str,
+            Required('city'): str,
+            Required('postcode'): str
         })

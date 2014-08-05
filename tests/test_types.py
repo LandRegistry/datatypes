@@ -1,13 +1,16 @@
 import unittest
 
 from datatypes.address import Address
+from datatypes.core import SchemaInvalidException
 
 
 class TestTypes(unittest.TestCase):
-    def test_can_validate_address_structure(self):
-        address_without_postcode = Address({
-            'line_one': '1 Accacia avenue',
-            'city': 'sometown'
-        })
+    def test_address_with_no_line_one_fails_validation(self):
+        address_without_postcode = Address(
+            {
+                'city': 'sometown',
+                'postcode': 'AB123VC'
+            }
+        )
 
-        self.assertFalse(address_without_postcode.is_valid(), "Address without postcode should not be valid")
+        self.assertRaises(SchemaInvalidException, address_without_postcode.validate)

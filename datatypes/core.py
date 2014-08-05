@@ -1,3 +1,5 @@
+from voluptuous import MultipleInvalid
+
 def filter_none(params):
     return {k: v for k, v in params.iteritems() if v is not None}
 
@@ -5,6 +7,8 @@ def filter_none(params):
 class NoSchemaException(Exception):
     pass
 
+class SchemaInvalidException(Exception):
+    pass
 
 class LandRegistryDatatype(object):
     def __init__(self, data):
@@ -21,6 +25,9 @@ class LandRegistryDatatype(object):
     def to_canonical_form(self, data):
         return data
 
-    def is_valid(self):
-        return self.schema(self.data)
+    def validate(self):
+        try:
+            self.schema(self.data)
+        except MultipleInvalid:
+            raise SchemaInvalidException
 
