@@ -5,6 +5,9 @@ from datatypes.core import DataDoesNotMatchSchemaException
 
 
 class TestTypes(unittest.TestCase):
+    def setUp(self):
+        self.address_with_no_fields = Address({})
+
     def test_address_with_no_line_one_fails_validation(self):
         address_without_postcode = Address({
             'city': 'sometown',
@@ -25,7 +28,15 @@ class TestTypes(unittest.TestCase):
         except DataDoesNotMatchSchemaException:
             self.fail('Could not validate address: ' + repr(DataDoesNotMatchSchemaException))
 
-    def test_can_get_errors_from_validation_when_fields_are_missing(self):
-        address_with_no_fields = Address({})
+    def test_schema_is_present_in_exception(self):
+        try:
+            self.address_with_no_fields.validate()
+            self.fail("Should have throw exception")
+        except DataDoesNotMatchSchemaException as exception:
+            self.assertEqual(exception.schema, self.address_with_no_fields.schema)
 
-        self.assertRaises(DataDoesNotMatchSchemaException, address_with_no_fields.validate)
+    def test_can_detect_missing_fields_from_exception(self):
+        try:
+            self.address_with_no_fields.validate()
+        except DataDoesNotMatchSchemaException as exception:
+            self.assertEquals(len(exception.field_errors), 3)  # we have three required fields
