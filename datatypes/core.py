@@ -6,11 +6,14 @@ def filter_none(params):
 
 
 class NoSchemaException(Exception):
-    pass
+    def __init__(self):
+        super(self.__class__, self).__init__("You have not defined a schema. You must overload the 'schema' method.")
 
 
-class SchemaInvalidException(Exception):
-    pass
+class DataDoesNotMatchSchemaException(Exception):
+    def __init__(self, cause):
+        super(self.__class__, self).__init__(cause.message + u', caused by ' + repr(cause))
+        self.cause = cause
 
 
 class LandRegistryDatatype(object):
@@ -31,5 +34,5 @@ class LandRegistryDatatype(object):
     def validate(self):
         try:
             self.schema(self.data)
-        except MultipleInvalid:
-            raise SchemaInvalidException
+        except MultipleInvalid as voluptuousException:
+            raise DataDoesNotMatchSchemaException(voluptuousException)

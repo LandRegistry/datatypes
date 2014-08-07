@@ -1,7 +1,7 @@
 import unittest
 
 from datatypes.address import Address
-from datatypes.core import SchemaInvalidException
+from datatypes.core import DataDoesNotMatchSchemaException
 
 
 class TestTypes(unittest.TestCase):
@@ -11,16 +11,21 @@ class TestTypes(unittest.TestCase):
             'postcode': 'AB123VC'
         })
 
-        self.assertRaises(SchemaInvalidException, address_without_postcode.validate)
+        self.assertRaises(DataDoesNotMatchSchemaException, address_without_postcode.validate)
 
-    def test_can_create_address_with_required_manadory_fields(self):
+    def test_can_create_address_with_required_mandatory_fields(self):
         address_with_mandatory_fields = Address({
-            'line_one': '1 Accacia Avenue',
-            'city': 'Somewhereville',
+            'line_one': '1 Acacia Avenue',
+            'city': 'Somewhere',
             'postcode': 'AB1235C'
         })
 
         try:
             address_with_mandatory_fields.validate
-        except SchemaInvalidException:
-            self.fail('Could not validate address: ' + repr(SchemaInvalidException))
+        except DataDoesNotMatchSchemaException:
+            self.fail('Could not validate address: ' + repr(DataDoesNotMatchSchemaException))
+
+    def test_can_get_errors_from_validation_when_fields_are_missing(self):
+        address_with_no_fields = Address({})
+
+        self.assertRaises(DataDoesNotMatchSchemaException, address_with_no_fields.validate)
