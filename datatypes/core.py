@@ -16,14 +16,14 @@ class Validator(object):
     def to_canonical_form(self, data):
         return data
 
-    def raise_error(self, voluptuous_exception):
-        raise DataDoesNotMatchSchemaException(voluptuous_exception)
-
     def validate(self, data):
         try:
             self.schema(filter_none(self.to_canonical_form(data)))
-        except MultipleInvalid as voluptuousException:
-            self.raise_error(voluptuousException)
+        except MultipleInvalid as voluptuous_exception:
+            field_errors = {e.path[0]: translate_error(e.error_message)
+                            for e in voluptuous_exception.errors
+                            if e.path is not [] and e.path is not None}
+            raise DataDoesNotMatchSchemaException(voluptuous_exception, field_errors)
 
 
 class DictionaryValidator(Validator):

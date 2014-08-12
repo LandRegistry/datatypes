@@ -19,14 +19,10 @@ class ErrorMessageNotDefined(Exception):
 
 
 class DataDoesNotMatchSchemaException(Exception):
-    def __init__(self, cause, field_name=None):
+    def __init__(self, cause, field_errors):
         super(self.__class__, self).__init__(cause.message + ', caused by ' + repr(cause))
-
         self.cause = cause
-
-        self.field_errors = {e.path[0]: translate_error(e.error_message)
-                             for e in self.cause.errors
-                             if e.path is not [] and e.path is not None}
+        self.field_errors = field_errors
 
     def __repr__(self):
         return self.__class__.__name__ + ' errors:' + repr(self.field_errors) + ' caused by:' + repr(self.cause)
