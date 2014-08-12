@@ -4,7 +4,7 @@ from datatypes.validators import AddressValidator
 from datatypes.core import DataDoesNotMatchSchemaException
 
 
-class TestTypes(unittest.TestCase):
+class TestAddressValidation(unittest.TestCase):
     def setUp(self):
         self.address_validator = AddressValidator()
 
@@ -33,5 +33,4 @@ class TestTypes(unittest.TestCase):
             self.address_validator.validate({})
         except DataDoesNotMatchSchemaException as exception:
             print repr(exception.field_errors)
-            self.assertTrue(False)
             self.assertEquals(len(exception.field_errors), 3)  # we have three required fields

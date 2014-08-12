@@ -1,6 +1,6 @@
 import unittest
 
-from datatypes.core import Validator, filter_none, NoSchemaException, NoErrorDictionaryDefined
+from datatypes.core import DictionaryValidator, filter_none, NoSchemaException, NoErrorDictionaryDefined
 
 
 class TestValidationCore(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestValidationCore(unittest.TestCase):
                          "Result should not contain key 'c' as this is set to None: " + repr(result))
 
     def test_raises_error_if_schema_not_defined(self):
-        class TestDataType(Validator):
+        class TestDataType(DictionaryValidator):
             def __init__(self):
                 super(self.__class__, self).__init__()
 
@@ -25,7 +25,7 @@ class TestValidationCore(unittest.TestCase):
         self.assertRaises(NoSchemaException, TestDataType)
 
     def test_raises_error_if_error_dictionary_is_not_defined(self):
-        class TestDataType(Validator):
+        class TestDataType(DictionaryValidator):
             def __init__(self):
                 super(self.__class__, self).__init__()
 
