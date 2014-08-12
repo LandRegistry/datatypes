@@ -1,15 +1,15 @@
 import unittest
 
-from datatypes.address import Address
+from datatypes.validators import AddressValidator
 from datatypes.core import DataDoesNotMatchSchemaException
 
 
 class TestTypes(unittest.TestCase):
     def setUp(self):
-        self.address_with_no_fields = Address({})
+        self.address_with_no_fields = AddressValidator({})
 
     def test_address_with_no_line_one_fails_validation(self):
-        address_without_postcode = Address({
+        address_without_postcode = AddressValidator({
             'city': 'sometown',
             'postcode': 'AB123VC'
         })
@@ -17,7 +17,7 @@ class TestTypes(unittest.TestCase):
         self.assertRaises(DataDoesNotMatchSchemaException, address_without_postcode.validate)
 
     def test_can_create_address_with_required_mandatory_fields(self):
-        address_with_mandatory_fields = Address({
+        address_with_mandatory_fields = AddressValidator({
             'line_one': '1 Acacia Avenue',
             'city': 'Somewhere',
             'postcode': 'AB1235C'
@@ -35,8 +35,11 @@ class TestTypes(unittest.TestCase):
         except DataDoesNotMatchSchemaException as exception:
             self.assertEqual(exception.schema, self.address_with_no_fields.schema)
 
+
     def test_can_detect_missing_fields_from_exception(self):
         try:
             self.address_with_no_fields.validate()
         except DataDoesNotMatchSchemaException as exception:
+            print repr(exception.field_errors)
+            self.assertTrue(False)
             self.assertEquals(len(exception.field_errors), 3)  # we have three required fields

@@ -11,6 +11,11 @@ class NoSchemaException(Exception):
         super(self.__class__, self).__init__("You have not defined a schema. You must overload the 'schema' method.")
 
 
+class NoErrorDictionaryDefined(Exception):
+    def __init__(self):
+        super(self.__class__, self).__init__("You have not defined the method error_dictionary")
+
+
 class DataDoesNotMatchSchemaException(Exception):
     def __init__(self, cause, schema):
         super(self.__class__, self).__init__(cause.message + u', caused by ' + repr(cause))
@@ -23,17 +28,21 @@ class DataDoesNotMatchSchemaException(Exception):
                              if e.path is not [] and e.path is not None}
 
 
-class LandRegistryDatatype(object):
+class Validator(object):
     def __init__(self, data):
         """
         This constructor will initialise a datatype
         :param schema: The voluptuous Schema required to validate this datatype.
         """
         self.schema = self.schema()
+        self.error_dictionary = self.error_dictionary()
         self.data = filter_none(self.to_canonical_form(data))
 
     def schema(self):
         raise NoSchemaException()
+
+    def error_dictionary(self):
+        raise NoErrorDictionaryDefined()
 
     def to_canonical_form(self, data):
         return data
