@@ -27,16 +27,17 @@ class DataDoesNotMatchSchemaException(Exception):
                              for e in self.cause.errors
                              if e.path is not [] and e.path is not None}
 
+    def __repr__(self):
+        return self.__class__.__name__ + ' errors:' + repr(self.field_errors) + ' caused by:' + repr(self.cause)
+
+    def __str__(self):
+        return self.__repr__()
+
 
 class Validator(object):
-    def __init__(self, data):
-        """
-        This constructor will initialise a datatype
-        :param schema: The voluptuous Schema required to validate this datatype.
-        """
+    def __init__(self):
         self.schema = self.schema()
         self.error_dictionary = self.error_dictionary()
-        self.data = filter_none(self.to_canonical_form(data))
 
     def schema(self):
         raise NoSchemaException()
@@ -50,8 +51,8 @@ class Validator(object):
     def raise_error(self, voluptuous_exception):
         raise DataDoesNotMatchSchemaException(voluptuous_exception, self.schema)
 
-    def validate(self):
+    def validate(self, data):
         try:
-            self.schema(self.data)
+            self.schema(filter_none(self.to_canonical_form(data)))
         except MultipleInvalid as voluptuousException:
             self.raise_error(voluptuousException)

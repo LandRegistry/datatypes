@@ -17,7 +17,7 @@ class TestValidationCore(unittest.TestCase):
     def test_raises_error_if_schema_not_defined(self):
         class TestDataType(Validator):
             def __init__(self):
-                super(self.__class__, self).__init__({})
+                super(self.__class__, self).__init__()
 
             def error_dictionary(self):
                 pass
@@ -27,7 +27,7 @@ class TestValidationCore(unittest.TestCase):
     def test_raises_error_if_error_dictionary_is_not_defined(self):
         class TestDataType(Validator):
             def __init__(self):
-                super(self.__class__, self).__init__({})
+                super(self.__class__, self).__init__()
 
             def schema(self):
                 pass
