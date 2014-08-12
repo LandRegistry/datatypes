@@ -37,8 +37,7 @@ class DictionaryValidator(Validator):
 
 class SingleValueValidator(Validator):
     def __init__(self):
-        super(self.__class__, self).__init__()
-        self.error_dictionary = self.error_dictionary()
+        super(SingleValueValidator, self).__init__()
         self.field_name = self.field_name()
         self.error_message = self.error_message()
 
@@ -46,4 +45,4 @@ class SingleValueValidator(Validator):
         raise FieldNameNotDefined()
 
     def error_message(self):
-        raise
+        raise ErrorMessageNotDefined()

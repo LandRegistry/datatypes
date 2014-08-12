@@ -4,7 +4,7 @@ from datatypes import schemas
 
 class AddressValidator(DictionaryValidator):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(AddressValidator, self).__init__()
 
     def schema(self):
         return schemas.address_schema
@@ -17,7 +17,7 @@ class AddressValidator(DictionaryValidator):
 
 class PostcodeValidator(SingleValueValidator):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(PostcodeValidator, self).__init__()
 
     def schema(self):
         return schemas.postcode_schema
