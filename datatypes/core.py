@@ -18,7 +18,7 @@ class NoErrorDictionaryDefined(Exception):
 
 class DataDoesNotMatchSchemaException(Exception):
     def __init__(self, cause, schema):
-        super(self.__class__, self).__init__(cause.message + u', caused by ' + repr(cause))
+        super(self.__class__, self).__init__(cause.message + ', caused by ' + repr(cause))
 
         self.cause = cause
         self.schema = schema
@@ -53,6 +53,8 @@ class Validator(object):
 
     def validate(self, data):
         try:
-            self.schema(filter_none(self.to_canonical_form(data)))
+            data = filter_none(self.to_canonical_form(data))
+            print 'data is ' + repr(data)
+            self.schema(data)
         except MultipleInvalid as voluptuousException:
             self.raise_error(voluptuousException)
