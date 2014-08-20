@@ -30,7 +30,9 @@ class DictionaryValidator(Validator):
         try:
             self.schema(self.clean_input(filter_none_from_dictionary(data)))
         except MultipleInvalid as exception:
-            raise DataDoesNotMatchSchemaException(exception, translate_voluptous_errors(exception))
+            raise DataDoesNotMatchSchemaException(cause=exception,
+                                                  value=data,
+                                                  field_errors=translate_voluptous_errors(exception))
 
     def define_error_dictionary(self):
         raise NoErrorDictionaryDefined()
@@ -45,7 +47,9 @@ class SingleValueValidator(Validator):
         try:
             self.schema(self.clean_input(data))
         except MultipleInvalid as exception:
-            raise DataDoesNotMatchSchemaException(exception, self.error_message)
+            raise DataDoesNotMatchSchemaException(cause=exception,
+                                                  value=data,
+                                                  field_errors=self.error_message)
 
     def define_error_message(self):
         raise ErrorMessageNotDefined()
