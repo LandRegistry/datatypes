@@ -11,9 +11,10 @@ class Postcode(SingleValueValidator):
         super(Postcode, self).__init__()
 
     def clean_input(self, postcode):
-        return postcode.replace(' ', '').upper()
+        return str(postcode).replace(' ', '').upper()
 
     def to_canonical_form(self, postcode):
+        self.validate(postcode)
         out = postcode.upper()
         if ' ' not in postcode:
             i = len(postcode) - 3

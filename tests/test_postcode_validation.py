@@ -17,6 +17,8 @@ class TestPostcodeValidation(unittest.TestCase):
 
     def test_does_not_validate_invalid_postcode(self):
         self.assertRaises(DataDoesNotMatchSchemaException, postcode_validator.validate, "sausages")
+        self.assertRaises(DataDoesNotMatchSchemaException, postcode_validator.validate, "")
+        self.assertRaises(DataDoesNotMatchSchemaException, postcode_validator.validate, 123)
 
     def test_can_convert_postcode_to_canonical_form(self):
         self.assertEqual(postcode_validator.to_canonical_form("wc2B6sE"), "WC2B 6SE")

@@ -1,23 +1,18 @@
 from functools import wraps
-import re
+
 from voluptuous import Invalid
 
-inward = 'ABDEFGHJLNPQRSTUWXYZ'
-fst = 'ABCDEFGHIJKLMNOPRSTUWYZ'
-sec = 'ABCDEFGHKLMNOPQRSTUVWXY'
-thd = 'ABCDEFGHJKSTUW'
-fth = 'ABEHMNPRVWXY'
+from ukpostcodeutils.validation import is_valid_postcode
+
+# If there are any extra UK postcodes that are valid but don't conform to the default algorithm
+# then add them here.
+extra_postcodes_that_are_valid = ()
 
 
 def postcode_is_valid():
     @wraps(postcode_is_valid)
     def f(postcode):
-        if not (re.match('[%s][1-9]\d[%s][%s]$' % (fst, inward, inward), postcode) or
-                    re.match('[%s][1-9]\d\d[%s][%s]$' % (fst, inward, inward), postcode) or
-                    re.match('[%s][%s]\d\d[%s][%s]$' % (fst, sec, inward, inward), postcode) or
-                    re.match('[%s][%s][1-9]\d\d[%s][%s]$' % (fst, sec, inward, inward), postcode) or
-                    re.match('[%s][1-9][%s]\d[%s][%s]$' % (fst, thd, inward, inward), postcode) or
-                    re.match('[%s][%s][1-9][%s]\d[%s][%s]$' % (fst, sec, fth, inward, inward), postcode)):
+        if not is_valid_postcode(postcode, extra_postcodes_that_are_valid):
             raise Invalid("Postcode is invalid: " + postcode)
         return postcode
 
