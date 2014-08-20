@@ -1,12 +1,12 @@
 import unittest
 
-from datatypes.validators import AddressValidator
+from datatypes.validators.address_validator import Address
 from datatypes.core import DataDoesNotMatchSchemaException
 
 
 class TestAddressValidation(unittest.TestCase):
     def setUp(self):
-        self.address_validator = AddressValidator()
+        self.address_validator = Address()
 
     def test_address_with_no_line_one_fails_validation(self):
         address_without_postcode = {

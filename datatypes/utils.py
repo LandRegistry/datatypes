@@ -1,5 +1,27 @@
-def filter_none(dictionary):
-    return {k: v for k, v in dictionary.iteritems() if v is not None}
+def filter_none_from_dictionary(dictionary):
+    filtered = {}
+
+    for k, v in dictionary.iteritems():
+        if isinstance(v, dict):
+            filtered[k] = filter_none_from_dictionary(v)
+        else:
+            if v is not None:
+                filtered[k] = v
+
+    return filtered
+
+
+def alphabetically_sorted_dict(d):
+    """
+    Returns a dictionary with all keys recursively sorted alphabetically
+    """
+    ordered = OrderedDict()
+    for k, v in sorted(d.items()):
+        if isinstance(v, dict):
+            ordered[k] = alphabetically_sorted_dict(v)
+        else:
+            ordered[k] = v
+    return ordered
 
 
 def translate_voluptous_errors(voluptuous_exception):

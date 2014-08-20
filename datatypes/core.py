@@ -1,7 +1,7 @@
 from voluptuous import MultipleInvalid, Schema
 
 from datatypes.exceptions import *
-from utils import translate_voluptous_errors, filter_none
+from utils import translate_voluptous_errors, filter_none_from_dictionary
 
 
 class Validator(object):
@@ -16,7 +16,7 @@ class Validator(object):
 
     def validate(self, data):
         try:
-            self.schema(filter_none(self.to_canonical_form(data)))
+            self.schema(filter_none_from_dictionary(self.to_canonical_form(data)))
         except MultipleInvalid as exception:
             raise DataDoesNotMatchSchemaException(exception, translate_voluptous_errors(exception))
 
