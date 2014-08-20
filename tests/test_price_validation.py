@@ -2,7 +2,7 @@
 
 import unittest
 from datatypes.exceptions import DataDoesNotMatchSchemaException
-from datatypes.validators import price_validator
+from datatypes import price_validator
 
 
 class TestPriceValidation(unittest.TestCase):

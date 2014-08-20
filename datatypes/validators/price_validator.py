@@ -6,9 +6,9 @@ from datatypes.core import SingleValueValidator
 price_schema = All(Match('^(£?)?[0-9]+(,[0-9]+)?(\.\d{1,2})?$'))
 
 
-class PriceValidator(SingleValueValidator):
+class Price(SingleValueValidator):
     def __init__(self):
-        super(PriceValidator, self).__init__()
+        super(Price, self).__init__()
 
     def define_schema(self):
         return price_schema
