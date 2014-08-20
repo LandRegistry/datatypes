@@ -21,5 +21,5 @@ setup(name='lrdatatypes',
       include_package_data=True,
       license='MIT',
       platforms='any',
-      install_requires=['voluptuous', 'pycountry']
+      install_requires=requirements()
 )
