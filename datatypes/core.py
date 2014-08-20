@@ -8,6 +8,9 @@ class Validator(object):
     def __init__(self, required=False, extra=True):
         self.schema = Schema(schema=self.define_schema(), required=required, extra=extra)
 
+    def clean_input(self, data):
+        return data
+
     def define_schema(self):
         raise NoSchemaException()
 
@@ -25,7 +28,7 @@ class DictionaryValidator(Validator):
 
     def validate(self, data):
         try:
-            self.schema(self.to_canonical_form(filter_none_from_dictionary(data)))
+            self.schema(self.clean_input(filter_none_from_dictionary(data)))
         except MultipleInvalid as exception:
             raise DataDoesNotMatchSchemaException(exception, translate_voluptous_errors(exception))
 
@@ -40,7 +43,7 @@ class SingleValueValidator(Validator):
 
     def validate(self, data):
         try:
-            self.schema(data)
+            self.schema(self.clean_input(data))
         except MultipleInvalid as exception:
             raise DataDoesNotMatchSchemaException(exception, self.error_message)
 

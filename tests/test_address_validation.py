@@ -20,14 +20,14 @@ class TestAddressValidation(unittest.TestCase):
         address_with_mandatory_fields = {
             'line_one': '1 Acacia Avenue',
             'city': 'Somewhere',
-            'postcode': 'AB1235C',
+            'postcode': 'AL35PU',
             'country': 'GB'
         }
 
         try:
             self.address_validator.validate(address_with_mandatory_fields)
-        except DataDoesNotMatchSchemaException:
-            self.fail('Could not validate address: ' + repr(DataDoesNotMatchSchemaException))
+        except DataDoesNotMatchSchemaException as e:
+            self.fail('Could not validate address: ' + repr(e))
 
     def test_can_detect_missing_fields_from_exception(self):
         try:

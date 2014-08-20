@@ -12,6 +12,10 @@ address_schema = {
     Required('country'): iso_country_code_validator.country_schema
 }
 
+error_dictionary = {
+    'line_one': 'line_one is a required field and must be a maximum of 40 characters long'
+}
+
 
 class Address(DictionaryValidator):
     def __init__(self):
@@ -21,6 +25,4 @@ class Address(DictionaryValidator):
         return address_schema
 
     def define_error_dictionary(self):
-        return {
-
-        }
+        return error_dictionary
