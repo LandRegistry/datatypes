@@ -11,7 +11,6 @@ class Postcode(SingleValueValidator):
     def define_schema(self):
         return postcode_schema
 
-
     def define_error_message(self):
         return {
 

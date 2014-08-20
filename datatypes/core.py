@@ -14,17 +14,20 @@ class Validator(object):
     def to_canonical_form(self, data):
         return data
 
-    def validate(self, data):
-        try:
-            self.schema(filter_none_from_dictionary(self.to_canonical_form(data)))
-        except MultipleInvalid as exception:
-            raise DataDoesNotMatchSchemaException(exception, translate_voluptous_errors(exception))
+    def validate(self):
+        raise Exception("You must define a validate method")
 
 
 class DictionaryValidator(Validator):
     def __init__(self):
         super(DictionaryValidator, self).__init__()
         self.error_dictionary = self.define_error_dictionary()
+
+    def validate(self, data):
+        try:
+            self.schema(self.to_canonical_form(filter_none_from_dictionary(data)))
+        except MultipleInvalid as exception:
+            raise DataDoesNotMatchSchemaException(exception, translate_voluptous_errors(exception))
 
     def define_error_dictionary(self):
         raise NoErrorDictionaryDefined()
@@ -33,11 +36,13 @@ class DictionaryValidator(Validator):
 class SingleValueValidator(Validator):
     def __init__(self):
         super(SingleValueValidator, self).__init__()
-        self.field_name = self.define_field_name()
         self.error_message = self.define_error_message()
 
-    def define_field_name(self):
-        raise FieldNameNotDefined()
+    def validate(self, data):
+        try:
+            self.schema(data)
+        except MultipleInvalid as exception:
+            raise DataDoesNotMatchSchemaException(exception, self.error_message)
 
     def define_error_message(self):
         raise ErrorMessageNotDefined()

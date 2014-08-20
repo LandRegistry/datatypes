@@ -33,28 +33,12 @@ class TestValidationCore(unittest.TestCase):
 
         self.assertRaises(NoSchemaException, TestDataType)
 
-    def test_raises_error_if_fieldname_is_not_defined(self):
-        class TestDataType(SingleValueValidator):
-            def __init__(self):
-                super(self.__class__, self).__init__()
-
-            def define_schema(self):
-                pass
-
-            def define_error_message(self):
-                pass
-
-        self.assertRaises(FieldNameNotDefined, TestDataType)
-
     def test_raises_error_if_error_message_not_defined(self):
         class TestDataType(SingleValueValidator):
             def __init__(self):
                 super(self.__class__, self).__init__()
 
             def define_schema(self):
-                pass
-
-            def define_field_name(self):
                 pass
 
         self.assertRaises(ErrorMessageNotDefined, TestDataType)

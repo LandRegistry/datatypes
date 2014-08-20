@@ -8,11 +8,6 @@ class NoErrorDictionaryDefined(Exception):
         super(NoErrorDictionaryDefined, self).__init__("You have not defined the method error_dictionary")
 
 
-class FieldNameNotDefined(Exception):
-    def __init__(self):
-        super(FieldNameNotDefined, self).__init__("You have not defined the method field_name")
-
-
 class ErrorMessageNotDefined(Exception):
     def __init__(self):
         super(ErrorMessageNotDefined, self).__init__("You have not defined the method error_message")
