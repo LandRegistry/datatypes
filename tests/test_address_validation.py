@@ -20,7 +20,8 @@ class TestAddressValidation(unittest.TestCase):
         address_with_mandatory_fields = {
             'line_one': '1 Acacia Avenue',
             'city': 'Somewhere',
-            'postcode': 'AB1235C'
+            'postcode': 'AB1235C',
+            'country': 'GB'
         }
 
         try:
@@ -33,4 +34,4 @@ class TestAddressValidation(unittest.TestCase):
             self.address_validator.validate({})
         except DataDoesNotMatchSchemaException as exception:
             print repr(exception.field_errors)
-            self.assertEquals(len(exception.field_errors), 3)  # we have three required fields
+            self.assertEquals(len(exception.field_errors), 4)  # we have three required fields
