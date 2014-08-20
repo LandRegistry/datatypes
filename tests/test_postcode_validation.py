@@ -22,5 +22,8 @@ class TestPostcodeValidation(unittest.TestCase):
 
     def test_can_convert_postcode_to_canonical_form(self):
         self.assertEqual(postcode_validator.to_canonical_form("wc2B6sE"), "WC2B 6SE")
+        self.assertEqual(postcode_validator.to_canonical_form('pl11aa'), 'PL1 1AA')
+        self.assertEqual(postcode_validator.to_canonical_form('pl132aa'), 'PL13 2AA')
+        self.assertEqual(postcode_validator.to_canonical_form('pl13 2aa'), 'PL13 2AA')
 
 
