@@ -20,7 +20,7 @@ class TestValidationCore(unittest.TestCase):
             def __init__(self):
                 super(self.__class__, self).__init__()
 
-            def error_dictionary(self):
+            def define_error_dictionary(self):
                 pass
 
         self.assertRaises(NoSchemaException, TestDataType)
@@ -30,10 +30,10 @@ class TestValidationCore(unittest.TestCase):
             def __init__(self):
                 super(self.__class__, self).__init__()
 
-            def schema(self):
+            def define_schema(self):
                 pass
 
-            def error_message(self):
+            def define_error_message(self):
                 pass
 
         self.assertRaises(FieldNameNotDefined, TestDataType)
@@ -43,10 +43,10 @@ class TestValidationCore(unittest.TestCase):
             def __init__(self):
                 super(self.__class__, self).__init__()
 
-            def schema(self):
+            def define_schema(self):
                 pass
 
-            def field_name(self):
+            def define_field_name(self):
                 pass
 
         self.assertRaises(ErrorMessageNotDefined, TestDataType)
@@ -56,7 +56,7 @@ class TestValidationCore(unittest.TestCase):
             def __init__(self):
                 super(self.__class__, self).__init__()
 
-            def schema(self):
+            def define_schema(self):
                 pass
 
         self.assertRaises(NoErrorDictionaryDefined, TestDataType)
