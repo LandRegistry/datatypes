@@ -10,6 +10,8 @@ class TestPriceValidation(unittest.TestCase):
         try:
             price_validator.validate("£123.00")
             price_validator.validate("234.23")
+            price_validator.validate("20000.19")
+            price_validator.validate(20000.19)
         except DataDoesNotMatchSchemaException as e:
             self.fail("Could not validate price " + repr(e))
 
