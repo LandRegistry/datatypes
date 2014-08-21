@@ -30,17 +30,6 @@ class Validator(object):
     def to_canonical_form(self, data):
         return data
 
-    def validate_in_wtforms(self, form=None, data=None, message=None):
-        try:
-            self.validate(data)
-        except DataDoesNotMatchSchemaException as e:
-            if message is None:
-                error_message = e.message
-            else:
-                error_message = message
-
-            raise ValidationError(error_message)
-
     def validate(self):
         raise Exception("You must define a validate method")
 
@@ -74,6 +63,17 @@ class SingleValueValidator(Validator):
     def __init__(self):
         super(SingleValueValidator, self).__init__()
         self.error_message = self.define_error_message()
+
+    def validate_in_wtforms(self, form=None, data=None, message=None):
+        try:
+            self.validate(data)
+        except DataDoesNotMatchSchemaException as e:
+            if message is None:
+                error_message = e.message
+            else:
+                error_message = message
+
+            raise ValidationError(error_message)
 
     def validate(self, data):
         try:

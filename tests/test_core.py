@@ -121,3 +121,4 @@ class TestValidationCore(unittest.TestCase):
             self.fail("Should have thrown exception")
         except ValidationError as exception:
             self.assertEqual(exception.message, "egg")
+
