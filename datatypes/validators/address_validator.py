@@ -18,9 +18,6 @@ error_dictionary = {
 
 
 class Address(DictionaryValidator):
-    def __init__(self):
-        super(Address, self).__init__()
-
     def define_schema(self):
         return address_schema
 

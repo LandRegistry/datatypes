@@ -9,9 +9,6 @@ country_schema = All(str, In(valid_countries))
 
 
 class IsoCountryCode(SingleValueValidator):
-    def __init__(self):
-        super(IsoCountryCode, self).__init__()
-
     def define_schema(self):
         return country_schema
 

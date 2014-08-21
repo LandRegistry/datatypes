@@ -7,9 +7,6 @@ postcode_schema = All(str, postcode_is_valid())
 
 
 class Postcode(SingleValueValidator):
-    def __init__(self):
-        super(Postcode, self).__init__()
-
     def clean_input(self, postcode):
         return str(postcode).replace(' ', '').upper()
 
