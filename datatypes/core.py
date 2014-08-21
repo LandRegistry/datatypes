@@ -2,6 +2,7 @@ from voluptuous import MultipleInvalid, Schema
 
 from datatypes.exceptions import *
 from utils import translate_voluptous_errors, filter_none_from_dictionary
+from wtforms.validators import ValidationError
 
 
 class Validator(object):
@@ -16,6 +17,17 @@ class Validator(object):
 
     def to_canonical_form(self, data):
         return data
+
+    def validate_in_wtforms(self, form, data, message=None):
+        try:
+            self.validate(data)
+        except DataDoesNotMatchSchemaException as e:
+            if not message:
+                error_message = e.message
+            else:
+                error_message = message
+
+            raise ValidationError(error_message)
 
     def validate(self):
         raise Exception("You must define a validate method")
