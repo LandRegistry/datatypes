@@ -42,6 +42,31 @@ class TestValidationCore(unittest.TestCase):
         except DataDoesNotMatchSchemaException as exception:
             self.assertEqual(exception.message, "foo")
 
+    def test_dictionary_validator_raises_correct_error_messages(self):
+        class TestDataType(DictionaryValidator):
+            def __init__(self):
+                super(self.__class__, self).__init__()
+
+            def define_schema(self):
+                return {
+                    'foo': Length(max=3),
+                    'bar': Length(max=1)
+                }
+
+            def define_error_dictionary(self):
+                return {
+                    'foo': 'sausages'
+                }
+
+        validator = TestDataType()
+
+        try:
+            validator.validate({'foo': '1234', 'bar': '12'})
+            self.fail("exception should have been thrown")
+        except DataDoesNotMatchSchemaException as exception:
+            self.assertEqual(exception.field_errors['foo'], 'sausages')
+            self.assertEqual(exception.field_errors['bar'], 'length of value must be at most 1')
+
     def test_raises_error_if_schema_not_defined(self):
         class TestDataType(DictionaryValidator):
             def __init__(self):
@@ -72,7 +97,7 @@ class TestValidationCore(unittest.TestCase):
 
         self.assertRaises(NoErrorDictionaryDefined, TestDataType)
 
-    def test_can_validate_single_value_in_wtforms(self):
+    def test_single_value_wtform_error_handling(self):
         class TestDataType(SingleValueValidator):
             def __init__(self):
                 super(self.__class__, self).__init__()
