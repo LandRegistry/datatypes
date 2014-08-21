@@ -1,7 +1,7 @@
 from voluptuous import MultipleInvalid, Schema
+from wtforms.validators import ValidationError
 
 from datatypes.exceptions import *
-from wtforms.validators import ValidationError
 
 
 def filter_none_from_dictionary(dictionary):
@@ -55,21 +55,28 @@ class DictionaryValidator(Validator):
         raise NoErrorDictionaryDefined()
 
 
+class WtfDatatypeValidator(object):
+    def __init__(self, validator, message=None):
+        self.validator = validator
+        self.message = message
+
+    def __call__(self, form=None, field=None):
+        try:
+            self.validator.validate(field)
+        except DataDoesNotMatchSchemaException as e:
+            print repr(e)
+            print e.message
+            print getattr(self, 'message', e.message)
+            raise ValidationError(self.message if self.message else e.message)
+
+
 class SingleValueValidator(Validator):
     def __init__(self):
         super(SingleValueValidator, self).__init__()
         self.error_message = self.define_error_message()
 
-    def validate_in_wtforms(self, form=None, data=None, message=None):
-        try:
-            self.validate(data)
-        except DataDoesNotMatchSchemaException as e:
-            if message is None:
-                error_message = e.message
-            else:
-                error_message = message
-
-            raise ValidationError(error_message)
+    def wtform_validator(self, message=None):
+        return WtfDatatypeValidator(self, message)
 
     def validate(self, data):
         try:

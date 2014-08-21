@@ -41,6 +41,7 @@ class TestValidationCore(unittest.TestCase):
             self.fail("Should have throw exception")
         except DataDoesNotMatchSchemaException as exception:
             self.assertEqual(exception.message, "foo")
+            self.assertEqual(repr(exception), str(exception))
 
     def test_dictionary_validator_raises_correct_error_messages(self):
         class TestDataType(DictionaryValidator):
@@ -108,16 +109,22 @@ class TestValidationCore(unittest.TestCase):
             def define_error_message(self):
                 return "egg"
 
+        class FakeField(object):
+            def data(self):
+                return 1234
+
         validator = TestDataType()
 
         try:
-            validator.validate_in_wtforms(data="1234", message="sausages")
+            wtvalidator = validator.wtform_validator(message="sausages")
+            wtvalidator(field=FakeField())
             self.fail("Should have thrown an exception")
         except ValidationError as exception:
             self.assertEqual(exception.message, "sausages")
 
         try:
-            validator.validate_in_wtforms(data="1234")
+            wtvalidator = validator.wtform_validator()
+            wtvalidator(field=FakeField())
             self.fail("Should have thrown exception")
         except ValidationError as exception:
             self.assertEqual(exception.message, "egg")
