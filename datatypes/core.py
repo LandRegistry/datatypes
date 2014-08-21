@@ -62,11 +62,9 @@ class WtfDatatypeValidator(object):
 
     def __call__(self, form=None, field=None):
         try:
-            self.validator.validate(field)
+            self.validator.validate(field.data)
         except DataDoesNotMatchSchemaException as e:
             print repr(e)
-            print e.message
-            print getattr(self, 'message', e.message)
             raise ValidationError(self.message if self.message else e.message)
 
 

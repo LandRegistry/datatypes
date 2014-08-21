@@ -6,6 +6,17 @@ from datatypes.exceptions import *
 from wtforms.validators import ValidationError
 
 
+class WtfTestDataType(SingleValueValidator):
+    def __init__(self):
+        super(self.__class__, self).__init__()
+
+    def define_schema(self):
+        return All(str, Length(max=3))
+
+    def define_error_message(self):
+        return "egg"
+
+
 class TestValidationCore(unittest.TestCase):
     def test_can_filter_none_and_self_from_dictionary(self):
         dictionary = {'a': 1, 'b': '2', 'c': None, 'self': self}
@@ -99,21 +110,10 @@ class TestValidationCore(unittest.TestCase):
         self.assertRaises(NoErrorDictionaryDefined, TestDataType)
 
     def test_single_value_wtform_error_handling(self):
-        class TestDataType(SingleValueValidator):
-            def __init__(self):
-                super(self.__class__, self).__init__()
-
-            def define_schema(self):
-                return All(str, Length(max=3))
-
-            def define_error_message(self):
-                return "egg"
+        validator = WtfTestDataType()
 
         class FakeField(object):
-            def data(self):
-                return 1234
-
-        validator = TestDataType()
+            data = "1234"
 
         try:
             wtvalidator = validator.wtform_validator(message="sausages")
@@ -129,3 +129,12 @@ class TestValidationCore(unittest.TestCase):
         except ValidationError as exception:
             self.assertEqual(exception.message, "egg")
 
+    def test_can_validate_single_field_in_wtf(self):
+        class FakeField(object):
+            data = "ab"
+
+        try:
+            validator = WtfTestDataType().wtform_validator()
+            validator(field=FakeField())
+        except ValidationError as exception:
+            self.fail("Should not have thrown exception " + repr(exception))
