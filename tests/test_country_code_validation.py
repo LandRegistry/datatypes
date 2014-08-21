@@ -1,11 +1,11 @@
 import unittest
 from datatypes.exceptions import DataDoesNotMatchSchemaException
-from datatypes.validators.iso_country_code_validator import IsoCountryCodeValidator, valid_countries
+from datatypes.validators.iso_country_code_validator import IsoCountryCode, valid_countries
 
 
 class TestCountryCodeValidation(unittest.TestCase):
     def setUp(self):
-        self.country_code_validator = IsoCountryCodeValidator()
+        self.country_code_validator = IsoCountryCode()
 
     def test_cannot_submit_invalid_country(self):
         self.assertRaises(DataDoesNotMatchSchemaException, self.country_code_validator.validate, 'FOO')

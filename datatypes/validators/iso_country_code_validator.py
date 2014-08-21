@@ -8,9 +8,9 @@ valid_countries = map(lambda c: c.alpha2, pycountry.countries)
 country_schema = All(str, In(valid_countries))
 
 
-class IsoCountryCodeValidator(SingleValueValidator):
+class IsoCountryCode(SingleValueValidator):
     def __init__(self):
-        super(IsoCountryCodeValidator, self).__init__()
+        super(IsoCountryCode, self).__init__()
 
     def define_schema(self):
         return country_schema
