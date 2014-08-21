@@ -18,11 +18,11 @@ class Validator(object):
     def to_canonical_form(self, data):
         return data
 
-    def validate_in_wtforms(self, form, data, message=None):
+    def validate_in_wtforms(self, form=None, data=None, message=None):
         try:
             self.validate(data)
         except DataDoesNotMatchSchemaException as e:
-            if not message:
+            if message is None:
                 error_message = e.message
             else:
                 error_message = message
@@ -61,6 +61,7 @@ class SingleValueValidator(Validator):
         except MultipleInvalid as exception:
             raise DataDoesNotMatchSchemaException(cause=exception,
                                                   value=data,
+                                                  message=self.error_message,
                                                   field_errors=self.error_message)
 
     def define_error_message(self):

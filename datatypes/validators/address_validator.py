@@ -13,7 +13,7 @@ address_schema = {
 }
 
 error_dictionary = {
-    'line_one': 'line_one is a required field and must be a maximum of 40 characters long'
+    'line_one': 'line_one is a required string field and must be a maximum of 40 characters long'
 }
 
 

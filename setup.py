@@ -8,8 +8,6 @@ def requirements():
         return [l.strip('\n') for l in f if l.strip('\n') and not l.startswith('#')]
 
 
-print requirements()
-
 setup(name='lrdatatypes',
       version='0.1',
       description='Provides core Land Registry data types to dependent applications',

@@ -14,8 +14,11 @@ class ErrorMessageNotDefined(Exception):
 
 
 class DataDoesNotMatchSchemaException(Exception):
-    def __init__(self, cause=None, value=None, field_errors=None):
-        super(self.__class__, self).__init__(cause.message + ', caused by ' + repr(cause))
+    def __init__(self, cause=None, value=None, field_errors=None, message=None):
+        if message is None:
+            message = cause.message + ', caused by ' + repr(cause)
+
+        super(self.__class__, self).__init__(message)
         self.cause = cause
         self.value = value
 

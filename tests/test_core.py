@@ -1,7 +1,9 @@
 import unittest
+from voluptuous import All, Length
 
 from datatypes.core import DictionaryValidator, filter_none_from_dictionary, SingleValueValidator
 from datatypes.exceptions import *
+from wtforms.validators import ValidationError
 
 
 class TestValidationCore(unittest.TestCase):
@@ -22,6 +24,23 @@ class TestValidationCore(unittest.TestCase):
         self.assertFalse('a' in result.iterkeys())
         sub_dictionary = result['b']
         self.assertFalse('c' in sub_dictionary.iterkeys())
+
+    def test_single_value_validator_raises_correct_error_messages(self):
+        class TestDatType(SingleValueValidator):
+            def __init__(self):
+                super(self.__class__, self).__init__()
+
+            def define_schema(self):
+                return All(Length(max=3))
+
+            def define_error_message(self):
+                return "foo"
+
+        try:
+            TestDatType().validate("1234")
+            self.fail("Should have throw exception")
+        except DataDoesNotMatchSchemaException as exception:
+            self.assertEqual(exception.message, "foo")
 
     def test_raises_error_if_schema_not_defined(self):
         class TestDataType(DictionaryValidator):
@@ -53,4 +72,27 @@ class TestValidationCore(unittest.TestCase):
 
         self.assertRaises(NoErrorDictionaryDefined, TestDataType)
 
+    def test_can_validate_single_value_in_wtforms(self):
+        class TestDataType(SingleValueValidator):
+            def __init__(self):
+                super(self.__class__, self).__init__()
 
+            def define_schema(self):
+                return All(str, Length(max=3))
+
+            def define_error_message(self):
+                return "egg"
+
+        validator = TestDataType()
+
+        try:
+            validator.validate_in_wtforms(data="1234", message="sausages")
+            self.fail("Should have thrown an exception")
+        except ValidationError as exception:
+            self.assertEqual(exception.message, "sausages")
+
+        try:
+            validator.validate_in_wtforms(data="1234")
+            self.fail("Should have thrown exception")
+        except ValidationError as exception:
+            self.assertEqual(exception.message, "egg")
