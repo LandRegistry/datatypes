@@ -55,26 +55,24 @@ class DictionaryValidator(Validator):
         raise NoErrorDictionaryDefined()
 
 
-class WtfDatatypeValidator(object):
-    def __init__(self, validator, message=None):
-        self.validator = validator
-        self.message = message
-
-    def __call__(self, form=None, field=None):
-        try:
-            self.validator.validate(field.data)
-        except DataDoesNotMatchSchemaException as e:
-            print repr(e)
-            raise ValidationError(self.message if self.message else e.message)
-
-
 class SingleValueValidator(Validator):
+    class WtfDatatypeValidator(object):
+        def __init__(self, validator, message):
+            self.validator = validator
+            self.message = message
+
+        def __call__(self, form=None, field=None):
+            try:
+                self.validator.validate(field.data)
+            except DataDoesNotMatchSchemaException as e:
+                raise ValidationError(self.message if self.message else e.message)
+
     def __init__(self):
         super(SingleValueValidator, self).__init__()
         self.error_message = self.define_error_message()
 
     def wtform_validator(self, message=None):
-        return WtfDatatypeValidator(self, message)
+        return SingleValueValidator.WtfDatatypeValidator(self, message)
 
     def validate(self, data):
         try:
