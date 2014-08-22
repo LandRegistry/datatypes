@@ -9,9 +9,9 @@ geo_json_schema = {
 
     # Currently we're only allowing named CRS
     Optional('crs'): {
-        Required('type'): All(Coerce(str)), # should be 'name'
-        Required('properties') : {
-            Required('name') : ogc_urn_validator.schema
+        Required('type'): All(str),  # should be 'name'
+        Required('properties'): {
+            Required('name'): ogc_urn_validator.schema
         }
     }
 }

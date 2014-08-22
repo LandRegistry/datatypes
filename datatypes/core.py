@@ -4,19 +4,6 @@ from wtforms.validators import ValidationError
 from datatypes.exceptions import *
 
 
-def filter_none_from_dictionary(dictionary):
-    filtered = {}
-
-    for k, v in dictionary.iteritems():
-        if isinstance(v, dict):
-            filtered[k] = filter_none_from_dictionary(v)
-        else:
-            if v is not None:
-                filtered[k] = v
-
-    return filtered
-
-
 class Validator(object):
     def __init__(self, required=False, extra=True):
         self.schema = Schema(schema=self.define_schema(), required=required, extra=extra)
@@ -39,13 +26,25 @@ class DictionaryValidator(Validator):
         super(DictionaryValidator, self).__init__()
         self.error_dictionary = self.define_error_dictionary()
 
+    def clean_input(self, dictionary):
+        filtered = {}
+
+        for k, v in dictionary.iteritems():
+            if isinstance(v, dict):
+                filtered[k] = self.clean_input(v)
+            else:
+                if v is not None:
+                    filtered[k] = v
+
+        return filtered
+
     def validate(self, data):
         def translate_voluptous_errors(voluptuous_exception):
             return {e.path[0]: self.error_dictionary.get(e.path[0], e.error_message)
                     for e in voluptuous_exception.errors if e.path}
 
         try:
-            self.schema(self.clean_input(filter_none_from_dictionary(data)))
+            self.schema(self.clean_input(data))
         except MultipleInvalid as exception:
             raise DataDoesNotMatchSchemaException(cause=exception,
                                                   value=data,

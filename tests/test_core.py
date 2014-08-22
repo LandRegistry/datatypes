@@ -1,9 +1,10 @@
 import unittest
-from voluptuous import All, Length
 
-from datatypes.core import DictionaryValidator, filter_none_from_dictionary, SingleValueValidator
-from datatypes.exceptions import *
+from voluptuous import All, Length
 from wtforms.validators import ValidationError
+
+from datatypes.core import DictionaryValidator, SingleValueValidator
+from datatypes.exceptions import *
 
 
 class WtfTestDataType(SingleValueValidator):
@@ -17,10 +18,27 @@ class WtfTestDataType(SingleValueValidator):
         return "egg"
 
 
+class TestDictValidator(DictionaryValidator):
+    def __init__(self):
+        super(self.__class__, self).__init__()
+
+    def define_schema(self):
+        return {
+            'foo': Length(max=3),
+            'bar': Length(max=1)
+        }
+
+    def define_error_dictionary(self):
+        return {
+            'foo': 'sausages'
+        }
+
+
 class TestValidationCore(unittest.TestCase):
     def test_can_filter_none_and_self_from_dictionary(self):
+        validator = TestDictValidator()
         dictionary = {'a': 1, 'b': '2', 'c': None, 'self': self}
-        result = filter_none_from_dictionary(dictionary)
+        result = validator.clean_input(dictionary)
 
         self.assertFalse(None in result.itervalues(),
                          "Result should not contain None: " + repr(result))
@@ -29,8 +47,9 @@ class TestValidationCore(unittest.TestCase):
                          "Result should not contain key 'c' as this is set to None: " + repr(result))
 
     def test_can_filter_none_from_nested_dictionary(self):
+        validator = TestDictValidator()
         dictionary = {'a': None, 'b': {'c': None, 'd': 'd'}}
-        result = filter_none_from_dictionary(dictionary)
+        result = validator.clean_input(dictionary)
 
         self.assertFalse('a' in result.iterkeys())
         sub_dictionary = result['b']
@@ -55,22 +74,7 @@ class TestValidationCore(unittest.TestCase):
             self.assertEqual(repr(exception), str(exception))
 
     def test_dictionary_validator_raises_correct_error_messages(self):
-        class TestDataType(DictionaryValidator):
-            def __init__(self):
-                super(self.__class__, self).__init__()
-
-            def define_schema(self):
-                return {
-                    'foo': Length(max=3),
-                    'bar': Length(max=1)
-                }
-
-            def define_error_dictionary(self):
-                return {
-                    'foo': 'sausages'
-                }
-
-        validator = TestDataType()
+        validator = TestDictValidator()
 
         try:
             validator.validate({'foo': '1234', 'bar': '12'})
