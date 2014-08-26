@@ -1,9 +1,9 @@
-from voluptuous import Required, Optional, All, Length
+from voluptuous import Required, Optional, All, Length, Coerce
 from datatypes.core import DictionaryValidator
 from datatypes.validators import postcode_validator, iso_country_code_validator
 
 address_schema = {
-    Required('line_one'): All(str, Length(max=40)),
+    Required('line_one'): All(Coerce(str), Length(max=40)),
     Optional('line_two'): All(str, Length(max=40)),
     Optional('line_three'): All(str, Length(max=40)),
     Optional('line_four'): All(str, Length(max=40)),
@@ -12,14 +12,18 @@ address_schema = {
     Required('country'): iso_country_code_validator.country_schema
 }
 
-error_dictionary = {
-    'line_one': 'line_one is a required string field and must be a maximum of 40 characters long'
-}
-
 
 class Address(DictionaryValidator):
     def define_schema(self):
         return address_schema
 
     def define_error_dictionary(self):
-        return error_dictionary
+        return {
+            'line_one': 'line_one is a required string field and must be a maximum of 40 characters long',
+            'line_two': 'line_two must be a string which is a maximum of 40 characters long',
+            'line_three': 'line_three must be a string which is a maximum of 40 characters long',
+            'line_four': 'line_four must be a string which is a maximum of 40 characters long',
+            'city': 'city is a required string field and must be a maximum of 40 characters long',
+            'postcode': 'postcode must be a valid UK postcode',
+            'country': 'country must be a valid ISO 2 letter country code'
+        }

@@ -26,6 +26,16 @@ class TestAddressValidation(unittest.TestCase):
         except DataDoesNotMatchSchemaException as e:
             self.fail('Could not validate address: ' + repr(e))
 
+    def test_length_of_fields_is_checked(self):
+        try:
+            address_validator.validate({
+                'line_one': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'  # over 40 chars
+            })
+            self.fail("Should have thrown exception")
+        except DataDoesNotMatchSchemaException as e:
+            self.assertEqual(e.field_errors['line_one'],
+                             'line_one is a required string field and must be a maximum of 40 characters long')
+
     def test_can_detect_missing_fields_from_exception(self):
         try:
             address_validator.validate({})

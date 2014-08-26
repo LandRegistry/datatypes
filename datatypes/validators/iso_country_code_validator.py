@@ -5,7 +5,7 @@ from datatypes.core import SingleValueValidator
 
 valid_countries = map(lambda c: c.alpha2, pycountry.countries)
 
-country_schema = All(str, In(valid_countries))
+country_schema = All(In(valid_countries))
 
 
 class IsoCountryCode(SingleValueValidator):

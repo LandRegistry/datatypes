@@ -1,5 +1,7 @@
-from voluptuous import All, Match
+from voluptuous import Match
+
 from datatypes.core import SingleValueValidator
+
 
 ocg_urn_schema = Match(pattern='urn:ogc:def:crs:EPSG:\d{4,5}')
 
