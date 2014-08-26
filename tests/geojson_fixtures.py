@@ -80,7 +80,8 @@ sample_geojson_from_migration = {
                 [508217.63, 221792.66],
                 [508224.31, 221787.24],
                 [508221.95, 221785.55000000002],
-                [508220.47000000003, 221784.46]]
+                [508220.47000000003, 221784.46]
+            ]
         ]
     },
 
@@ -97,4 +98,27 @@ sample_geojson_from_migration = {
     }
 }
 
+sample_invalid_geojson = {
+    "type": "Feature",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [508220, 123]
+            ]
+        ]
+    },
+
+    "properties": {
+        "title_number": "BD161871",
+        "source": "title_plan_extent"
+    },
+
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:EPSG:27700"
+        }
+    }
+}
 
