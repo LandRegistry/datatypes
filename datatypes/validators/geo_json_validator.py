@@ -1,9 +1,11 @@
+import json
+
 from voluptuous import Required, In, Optional, All, Length, extra
 import geojson
-import json
 
 from datatypes import ogc_urn_validator
 from datatypes.core import DictionaryValidator, SingleValueValidator
+
 
 # This isn't intended to be a full GeoJSON validator, rather a constraining
 # validator to support the types / models that the land registry have.
@@ -12,13 +14,8 @@ from datatypes.core import DictionaryValidator, SingleValueValidator
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 geo_json_schema = {
-    Required('type'): All(str, In(['Point',
-                                   'MultiPoint',
-                                   'LineString',
-                                   'MultiLineString',
-                                   'Polygon',
+    Required('type'): All(str, In(['Polygon',
                                    'MultiPolygon',
-                                   'GeometryCollection',
                                    'Feature',
                                    'FeatureCollection'])),
 
