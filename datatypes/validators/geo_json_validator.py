@@ -14,13 +14,10 @@ from datatypes.core import DictionaryValidator, SingleValueValidator
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 geo_json_schema = {
-    Required('type'): All(str, In(['Polygon',
-                                   'MultiPolygon',
-                                   'Feature',
-                                   'FeatureCollection'])),
+    Required('type'): All(str, In(['Feature'])),
 
     # Currently we're only allowing named CRS
-    Optional('crs'): {
+    Required('crs'): {
         Required('type'): In(['name']),
         Required('properties'): {
             Required('name'): ogc_urn_validator.schema
