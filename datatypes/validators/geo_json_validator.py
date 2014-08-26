@@ -1,9 +1,9 @@
 from voluptuous import Required, In, Optional, All, Length, extra
-
-from datatypes import ogc_urn_validator
-from datatypes.core import DictionaryValidator
 import geojson
 import json
+
+from datatypes import ogc_urn_validator
+from datatypes.core import DictionaryValidator, SingleValueValidator
 
 # This isn't intended to be a full GeoJSON validator, rather a constraining
 # validator to support the types / models that the land registry have.
@@ -63,5 +63,24 @@ class GeoJson(DictionaryValidator):
             raise DataDoesNotMatchSchemaException(cause=exception, message='Valid GeoJSON is required')
 
         return dictionary
+
+
+class GeoJsonString(SingleValueValidator):
+    geo_dict_validator = GeoJson()
+
+    def define_error_message(self):
+        return 'Valid GeoJSON is required'
+
+    def define_schema(self):
+        return {}
+
+    def validate(self, data):
+        GeoJsonString.geo_dict_validator.validate(self.clean_input(data))
+
+    def clean_input(self, data):
+        try:
+            return geojson.loads(data)
+        except Exception as exception:
+            raise DataDoesNotMatchSchemaException(cause=exception, message=self.error_message)
 
 

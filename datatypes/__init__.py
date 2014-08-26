@@ -10,6 +10,7 @@ postcode_validator = Postcode()
 country_code_validator = IsoCountryCode()
 ogc_urn_validator = OgcUrn()
 
-from datatypes.validators.geo_json_validator import GeoJson
+from datatypes.validators.geo_json_validator import GeoJson, GeoJsonString
 
 geo_json_validator = GeoJson()
+geo_json_string_validator = GeoJsonString()
