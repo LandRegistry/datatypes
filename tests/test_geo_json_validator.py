@@ -14,4 +14,6 @@ class TestGeoJsonValidator(unittest.TestCase):
             self.fail("Should not have thrown exception " + repr(exception))
 
     def test_does_not_validate_invalid_geo_json(self):
-        pass
+        invalid_geo_json = {'foo': 'bar'}
+        self.assertRaises(DataDoesNotMatchSchemaException, geo_json_validator.validate, invalid_geo_json)
+        
