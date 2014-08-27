@@ -51,8 +51,6 @@ class DictionaryValidator(Validator):
             map(lambda e:
                 flattened_errors.update(flatten_error(flatten_path(e))),
                 voluptuous_exception.errors)
-
-            print "result " + str(flattened_errors)
             return flattened_errors
 
         try:

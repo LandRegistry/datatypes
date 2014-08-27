@@ -23,7 +23,7 @@ class DataDoesNotMatchSchemaException(Exception):
         self.value = value
 
         if field_errors is None:
-            self.field_errors = []
+            self.field_errors = {}
         else:
             self.field_errors = field_errors
 

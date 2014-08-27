@@ -73,7 +73,10 @@ class GeoJsonString(SingleValueValidator):
         return {}
 
     def validate(self, data):
-        GeoJsonString.geo_dict_validator.validate(self.clean_input(data))
+        try:
+            GeoJsonString.geo_dict_validator.validate(self.clean_input(data))
+        except DataDoesNotMatchSchemaException as exception:
+            raise DataDoesNotMatchSchemaException(message=self.error_message, field_errors=exception.field_errors)
 
     def clean_input(self, data):
         try:
