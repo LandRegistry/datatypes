@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-
 from voluptuous import All, Match, Coerce
 
 from datatypes.core import SingleValueValidator
 
 
-price_schema = All(Coerce(str), Match('^(£?)?[0-9]+(,[0-9]+)?(\.\d{1,2})?$'))
+price_schema = All(Coerce(str), Match('^[0-9]+(,[0-9]+)?(\.\d{1,2})?$'))
 
 
 class Price(SingleValueValidator):
