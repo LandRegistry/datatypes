@@ -41,4 +41,4 @@ class TestAddressValidation(unittest.TestCase):
             address_validator.validate({})
         except DataDoesNotMatchSchemaException as exception:
             print repr(exception.field_errors)
-            self.assertEquals(len(exception.field_errors), 4)  # we have three required fields
+            self.assertEquals(len(exception.field_errors), 4)  # we have four required fields

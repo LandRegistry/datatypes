@@ -46,8 +46,12 @@ class GeoJson(DictionaryValidator):
 
     def define_error_dictionary(self):
         return {
-            'geometry': 'A polygon or multi-polygon is required',
-            'crs': "A valid 'CRS' containing an EPSG is required"
+            'geometry.type': 'A polygon or multi-polygon is required',
+            'geometry.coordinates': 'Coordinates must be floating point number pairs',
+
+            'crs': "A valid 'CRS' containing an EPSG is required",
+            'crs.type': 'CRS type must be "name"',
+            'crs.properties': 'CRS properties are required',
         }
 
     def clean_input(self, dictionary):

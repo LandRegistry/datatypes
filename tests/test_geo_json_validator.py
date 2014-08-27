@@ -21,6 +21,16 @@ class TestGeoJsonValidator(unittest.TestCase):
     def test_cannot_validate_points(self):
         self.assertRaises(DataDoesNotMatchSchemaException, geo_json_validator.validate, sample_invalid_point)
 
+    def test_raises_correct_error_message_for_nested_structure(self):
+        try:
+            geo_json_validator.validate(sample_invalid_point)
+        except DataDoesNotMatchSchemaException as exception:
+            self.assertEqual(exception.field_errors['geometry.coordinates'],
+                             'Coordinates must be floating point number pairs')
+
+            self.assertEqual(exception.field_errors['geometry.type'], 'A polygon or multi-polygon is required')
+            self.assertEqual(exception.field_errors['crs'], "A valid 'CRS' containing an EPSG is required")
+
     def test_can_validate_geo_json_string(self):
         try:
             geo_json_string_validator.validate(json.dumps(sample_geojson_from_migration))

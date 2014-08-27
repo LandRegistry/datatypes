@@ -39,16 +39,28 @@ class DictionaryValidator(Validator):
         return filtered
 
     def validate(self, data):
-        def translate_voluptous_errors(voluptuous_exception):
-            return {e.path[0]: self.error_dictionary.get(e.path[0], e.error_message)
-                    for e in voluptuous_exception.errors if e.path}
+        def translate_voluptuous_errors(voluptuous_exception):
+            def flatten_error(error_path):
+                return {error_path: self.error_dictionary.get(error_path, e.error_message)
+                        for e in voluptuous_exception.errors if e.path}
+
+            def flatten_path(exception):
+                return '.'.join(map(lambda x: str(x), filter(lambda x: not str(x).isdigit(), exception.path)))
+
+            flattened_errors = {}
+            map(lambda e:
+                flattened_errors.update(flatten_error(flatten_path(e))),
+                voluptuous_exception.errors)
+
+            print "result " + str(flattened_errors)
+            return flattened_errors
 
         try:
             self.schema(self.clean_input(data))
         except MultipleInvalid as exception:
             raise DataDoesNotMatchSchemaException(cause=exception,
                                                   value=data,
-                                                  field_errors=translate_voluptous_errors(exception))
+                                                  field_errors=translate_voluptuous_errors(exception))
 
     def define_error_dictionary(self):
         raise NoErrorDictionaryDefined()
