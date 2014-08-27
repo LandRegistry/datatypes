@@ -62,7 +62,7 @@ sample_geojson_from_migration = {
 sample_invalid_geojson = {
     "type": "Feature",
     "geometry": {
-        "type": "Polygon",
+        "type": "Onions",
         "coordinates": [
             [
                 [508220, 123]
@@ -80,6 +80,46 @@ sample_invalid_geojson = {
         "properties": {
             "name": "urn:ogc:def:crs:EPSG:27700"
         }
+    }
+}
+
+sample_lincolns_inn_fields = {
+    "type": "Feature",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:EPSG:27700"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    530647,
+                    181419
+                ],
+                [
+                    530855,
+                    181500
+                ],
+                [
+                    530917,
+                    181351
+                ],
+                [
+                    530713,
+                    181266
+                ],
+                [
+                    530647,
+                    181419
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "name": "Lincoln's Inn Fields"
     }
 }
 

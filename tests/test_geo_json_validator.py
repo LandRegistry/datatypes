@@ -12,6 +12,7 @@ class TestGeoJsonValidator(unittest.TestCase):
             geo_json_validator.validate(sample_geojson_polygon)
             geo_json_validator.validate(sample_geojson_polygon)
             geo_json_validator.validate(sample_geojson_from_migration)
+            geo_json_validator.validate(sample_lincolns_inn_fields)
         except DataDoesNotMatchSchemaException as exception:
             self.fail("Should not have thrown exception " + repr(exception))
 
