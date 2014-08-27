@@ -17,7 +17,7 @@ class Validator(object):
     def to_canonical_form(self, data):
         return data
 
-    def validate(self):
+    def validate(self, data):
         raise Exception("You must define a validate method")
 
 
@@ -39,23 +39,21 @@ class DictionaryValidator(Validator):
         return filtered
 
     def validate(self, data):
-        def translate_voluptuous_errors(voluptuous_exception):
-            def flatten_error(error_path):
-                return {error_path: self.error_dictionary.get(error_path, e.error_message)
-                        for e in voluptuous_exception.errors if e.path}
-
-            def flatten_path(exception):
-                return '.'.join(map(lambda x: str(x), filter(lambda x: not str(x).isdigit(), exception.path)))
-
-            flattened_errors = {}
-            map(lambda e:
-                flattened_errors.update(flatten_error(flatten_path(e))),
-                voluptuous_exception.errors)
-            return flattened_errors
-
         try:
             self.schema(self.clean_input(data))
         except MultipleInvalid as exception:
+            def translate_voluptuous_errors(voluptuous_exception):
+                def flatten_error(error_path):
+                    return {error_path: self.error_dictionary.get(error_path, e.error_message)
+                            for e in voluptuous_exception.errors if e.path}
+
+                def flatten_path(error):
+                    return '.'.join(map(lambda x: str(x), filter(lambda x: not str(x).isdigit(), error.path)))
+
+                flattened_errors = {}
+                map(lambda e: flattened_errors.update(flatten_error(flatten_path(e))), voluptuous_exception.errors)
+                return flattened_errors
+
             raise DataDoesNotMatchSchemaException(cause=exception,
                                                   value=data,
                                                   field_errors=translate_voluptuous_errors(exception))
