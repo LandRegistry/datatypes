@@ -62,7 +62,7 @@ sample_geojson_from_migration = {
 sample_invalid_geojson = {
     "type": "Feature",
     "geometry": {
-        "type": "Onions",
+        "type": "Polygon",
         "coordinates": [
             [
                 [508220, 123]
@@ -96,24 +96,24 @@ sample_lincolns_inn_fields = {
         "coordinates": [
             [
                 [
-                    530647,
-                    181419
+                    530647.00,
+                    181419.00
                 ],
                 [
-                    530855,
-                    181500
+                    530855.00,
+                    181500.00
                 ],
                 [
-                    530917,
-                    181351
+                    530917.00,
+                    181351.00
                 ],
                 [
-                    530713,
-                    181266
+                    530713.00,
+                    181266.00
                 ],
                 [
-                    530647,
-                    181419
+                    530647.00,
+                    181419.00
                 ]
             ]
         ]

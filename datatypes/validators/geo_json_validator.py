@@ -1,6 +1,5 @@
 import json
-
-from voluptuous import Required, In, Optional, All, Length, extra, Coerce
+from voluptuous import Required, In, Optional, All, Length, extra
 import geojson
 
 from datatypes import ogc_urn_validator
@@ -29,7 +28,7 @@ geo_json_schema = {
         Required('type'): All(str, In(['Polygon', 'MultiPolygon'])),
         Required('coordinates'): [
             [
-                All(Length(min=2, max=2), [Coerce(float)])
+                All(Length(min=2, max=2), [float])
             ]
         ]
     },
