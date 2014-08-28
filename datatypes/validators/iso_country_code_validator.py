@@ -3,7 +3,10 @@ import pycountry
 
 from datatypes.core import SingleValueValidator
 
-valid_countries = map(lambda c: c.alpha2, pycountry.countries)
+
+countries = pycountry.countries
+
+valid_countries = map(lambda c: c.alpha2, countries)
 
 country_schema = All(In(valid_countries))
 
@@ -14,3 +17,4 @@ class IsoCountryCode(SingleValueValidator):
 
     def define_error_message(self):
         return "Country must be a valid ISO country code"
+
