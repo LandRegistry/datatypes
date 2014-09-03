@@ -48,7 +48,7 @@ class DictionaryValidator(Validator):
                             for e in voluptuous_exception.errors if e.path}
 
                 def flatten_path(error):
-                    return '.'.join(map(lambda x: str(x), filter(lambda x: not str(x).isdigit(), error.path)))
+                    return '.'.join((str(x) for x in error.path if not str(x).isdigit()))
 
                 flattened_errors = {}
                 map(lambda e: flattened_errors.update(flatten_error(flatten_path(e))), voluptuous_exception.errors)

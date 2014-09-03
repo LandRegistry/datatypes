@@ -6,7 +6,7 @@ from datatypes.core import SingleValueValidator
 
 countries = pycountry.countries
 
-valid_countries = map(lambda c: c.alpha2, countries)
+valid_countries = [c.alpha2 for c in countries]
 
 country_schema = All(In(valid_countries))
 
