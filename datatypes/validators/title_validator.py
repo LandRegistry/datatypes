@@ -1,9 +1,9 @@
-from voluptuous import All, In
+from voluptuous import Required, In, Optional, All, Length, Coerce
 from datatypes.core import DictionaryValidator
 from datatypes.validators import address_validator, price_validator, geo_json_validator
 
 title_schema = {
-    'title_number': All(str),
+    Required('title_number'): All(str),
 
     'proprietors': [
         {
@@ -17,8 +17,8 @@ title_schema = {
         'class-of-title': In(['absolute', 'good', 'qualified', 'possesory'])
     },
 
-    'payment': {
-        'price_paid': price_validator.price_schema,
+    Required('payment'): {
+        Required('price_paid'): price_validator.price_schema,
         'titles': [
             str  # TODO: Check that the current title number is present here?
         ]
@@ -34,5 +34,5 @@ class Title(DictionaryValidator):
 
     def define_error_dictionary(self):
         return {
-
+            'title_number': 'title_number is a required field'
         }
