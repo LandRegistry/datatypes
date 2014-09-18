@@ -2,7 +2,7 @@ import json
 from voluptuous import Required, In, Optional, All, Length, extra
 import geojson
 
-from datatypes import ogc_urn_validator
+from datatypes.validators import ogc_urn_validator
 from datatypes.core import DictionaryValidator, SingleValueValidator
 
 
@@ -19,7 +19,7 @@ geo_json_schema = {
     Required('crs'): {
         Required('type'): In(['name']),
         Required('properties'): {
-            Required('name'): ogc_urn_validator.schema
+            Required('name'): ogc_urn_validator.ogc_urn_schema
         }
     },
 
