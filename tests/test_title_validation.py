@@ -16,12 +16,28 @@ dumb_entry = {
     "notes" : []
 }
 
+proprietorship = {
+        "text" : "example text",
+        "fields" : {"proprietors": [
+                {   "name": {
+                        "title" : "Balarot",
+                        "full_name" : "Cheesoir",
+                        "decoration" : "Elegant"
+                    },
+                    "address": object
+                }
+            ]
+        },
+        "deeds" : [],
+        "notes": []
+}
+
 simple_title = {
     "title_number": "TEST123456789",
     "payment": {
         "price_paid": "3100.00"
     },
-    "proprietorship": dumb_entry,
+    "proprietorship": proprietorship,
     "property_description": dumb_entry,
     "price_paid": dumb_entry,
     "provisions": [],

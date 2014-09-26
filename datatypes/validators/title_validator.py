@@ -1,6 +1,6 @@
 from voluptuous import Required, In, Optional, All, Length, Coerce
 from datatypes.core import DictionaryValidator
-from datatypes.validators import address_validator, price_validator, geo_json_validator, entry_validator
+from datatypes.validators import address_validator, price_validator, geo_json_validator, entry_validator, proprietorship_validator
 
 title_schema = {
     Required("title_number"): All(str),
@@ -26,7 +26,7 @@ title_schema = {
 
     "extent": geo_json_validator.geo_json_schema,
 
-    Required("proprietorship"): entry_validator.entry_schema,
+    Required("proprietorship"): proprietorship_validator.proprietorship_schema,
 
     Required("property_description"): entry_validator.entry_schema,
 
