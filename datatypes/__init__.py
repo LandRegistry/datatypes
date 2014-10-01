@@ -20,9 +20,15 @@ deed_validator = Deed()
 person_validator = Person()
 proprietorship_validator = Proprietorship()
 
-
-
 from datatypes.validators.geo_json_validator import GeoJson, GeoJsonString
 
 geo_json_validator = GeoJson()
 geo_json_string_validator = GeoJsonString()
+
+from datatypes.validators.system_of_record_request_validator import SystemOfRecordRequestValidator
+
+system_of_record_request_validator = SystemOfRecordRequestValidator()
+
+from datatypes.validators.system_of_record_chain_message_validator import SystemOfRecordChainMessageValidator
+
+system_of_record_chain_message_validator = SystemOfRecordChainMessageValidator()
