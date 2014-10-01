@@ -1,7 +1,33 @@
 from voluptuous import MultipleInvalid, Schema
 from wtforms.validators import ValidationError
+from collections import OrderedDict
 
 from datatypes.exceptions import *
+
+
+def filter_none_from_dictionary(dictionary):
+    filtered = {}
+
+    for k, v in dictionary.iteritems():
+        if isinstance(v, dict):
+            filtered[k] = filter_none_from_dictionary(v)
+        else:
+            if v is not None:
+                filtered[k] = v
+
+    return filtered
+
+
+def alphabetically_sorted_dict(dictionary):
+    ordered = OrderedDict()
+
+    for k, v in sorted(dictionary.items()):
+        if isinstance(v, dict):
+            ordered[k] = alphabetically_sorted_dict(v)
+        else:
+            ordered[k] = v
+
+    return ordered
 
 
 class Validator(object):
@@ -15,7 +41,7 @@ class Validator(object):
         raise NoSchemaException()
 
     def to_canonical_form(self, data):
-        return data
+        return alphabetically_sorted_dict(self.clean_input(data))
 
     def validate(self, data):
         raise Exception("You must define a validate method")
@@ -27,16 +53,7 @@ class DictionaryValidator(Validator):
         self.error_dictionary = self.define_error_dictionary()
 
     def clean_input(self, dictionary):
-        filtered = {}
-
-        for k, v in dictionary.iteritems():
-            if isinstance(v, dict):
-                filtered[k] = self.clean_input(v)
-            else:
-                if v is not None:
-                    filtered[k] = v
-
-        return filtered
+        return filter_none_from_dictionary(dictionary)
 
     def validate(self, data):
         try:
