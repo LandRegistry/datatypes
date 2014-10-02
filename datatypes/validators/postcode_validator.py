@@ -3,12 +3,12 @@ from voluptuous import All
 from datatypes.core import SingleValueValidator
 from datatypes.voluptuous_helpers.postcode_schema_validator import postcode_is_valid
 
-postcode_schema = All(str, postcode_is_valid())
+postcode_schema = All(unicode, postcode_is_valid())
 
 
 class Postcode(SingleValueValidator):
     def clean_input(self, postcode):
-        return str(postcode).replace(' ', '').upper()
+        return unicode(postcode).replace(' ', '').upper()
 
     def to_canonical_form(self, postcode):
         self.validate(postcode)

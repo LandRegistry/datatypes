@@ -5,7 +5,7 @@ from datatypes.validators import deed_validator
 from datatypes.validators import person_validator
 
 proprietorship_schema = {
-    Required("text"): All(str),
+    Required("text"): All(unicode),
     Required("fields"): {
         Required("proprietors"): All( Length(min=1),
             [ { Required("name"): person_validator.person_schema,

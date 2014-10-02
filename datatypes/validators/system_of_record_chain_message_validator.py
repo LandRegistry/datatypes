@@ -10,7 +10,7 @@ schema = {
         Required('messages'): [
             {
                 Required('message'): system_of_record_request_validator.schema,
-                Required('chain_name'): str,
+                Required('chain_name'): unicode,
                 }
         ]
     }

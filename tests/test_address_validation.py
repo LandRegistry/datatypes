@@ -34,7 +34,7 @@ class TestAddressValidation(unittest.TestCase):
             self.fail("Should have thrown exception")
         except DataDoesNotMatchSchemaException as e:
             self.assertEqual(e.field_errors['line_one'],
-                             'line_one is a required string field and must be a maximum of 40 characters long')
+                             'line_one is a required unicode field and must be a maximum of 40 characters long')
 
     def test_can_detect_missing_fields_from_exception(self):
         try:

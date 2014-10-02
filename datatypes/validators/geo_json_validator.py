@@ -13,7 +13,7 @@ from datatypes.core import DictionaryValidator, SingleValueValidator
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 geo_json_schema = {
-    Required('type'): All(str, In(['Feature'])),
+    Required('type'): All(unicode, In(['Feature'])),
 
     # Currently we're only allowing named CRS
     Required('crs'): {
@@ -25,7 +25,7 @@ geo_json_schema = {
 
     # These are our currently supported geometry types
     Required('geometry'): {
-        Required('type'): All(str, In(['Polygon', 'MultiPolygon'])),
+        Required('type'): All(unicode, In(['Polygon', 'MultiPolygon'])),
         Required('coordinates'): [
             [
                 All(Length(min=2, max=2), [float])
@@ -82,5 +82,3 @@ class GeoJsonString(SingleValueValidator):
             return geojson.loads(data)
         except Exception as exception:
             raise DataDoesNotMatchSchemaException(cause=exception, message=self.error_message)
-
-

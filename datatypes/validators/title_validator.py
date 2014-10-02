@@ -1,13 +1,13 @@
-from voluptuous import Required, In, Optional, All, Length, Coerce
+from voluptuous import Required, In, All
 from datatypes.core import DictionaryValidator
 from datatypes.validators import address_validator, price_validator, geo_json_validator, entry_validator, proprietorship_validator
 
 title_schema = {
-    Required("title_number"): All(str),
+    Required("title_number"): All(unicode),
 
     "proprietors": [
         {
-            "full_name": str
+            "full_name": unicode
         }
     ],
 
@@ -20,7 +20,7 @@ title_schema = {
     Required("payment"): {
         Required("price_paid"): price_validator.price_schema,
         "titles": [
-            str  # TODO: Check that the current title number is present here?
+            unicode  # TODO: Check that the current title number is present here?
         ]
     },
 

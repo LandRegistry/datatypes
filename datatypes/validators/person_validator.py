@@ -1,11 +1,12 @@
-from voluptuous import Required, All, Optional
+from voluptuous import Required
 from datatypes.core import DictionaryValidator
 
 person_schema = {
-    Required("title"): str,
-    Required("full_name"): str,
-    Required("decoration"): str
+    Required("title"): unicode,
+    Required("full_name"): unicode,
+    Required("decoration"): unicode
 }
+
 
 class Person(DictionaryValidator):
 

@@ -3,7 +3,7 @@ from voluptuous import All, Match, Coerce
 from datatypes.core import SingleValueValidator
 
 
-price_schema = All(Coerce(float), Coerce(str), Match('^[0-9]+(,[0-9]+)?(\.\d{1,2})?$'))
+price_schema = All(Coerce(float), Coerce(unicode), Match('^[0-9]+(,[0-9]+)?(\.\d{1,2})?$'))
 
 
 class Price(SingleValueValidator):

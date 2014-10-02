@@ -12,7 +12,7 @@ class WtfTestDataType(SingleValueValidator):
         super(self.__class__, self).__init__()
 
     def define_schema(self):
-        return All(str, Length(max=3))
+        return All(unicode, Length(max=3))
 
     def define_error_message(self):
         return "egg"
