@@ -5,8 +5,9 @@ from copy import deepcopy
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 from datatypes import title_validator
+from datatypes.core import str_to_uni_dict
 
-dumb_entry = {
+dumb_entry = str_to_uni_dict({
     "text" : "some text",
     "fields" : {
             "field_name_1": "something",
@@ -14,9 +15,9 @@ dumb_entry = {
     },
     "deeds" : [],
     "notes" : []
-}
+})
 
-proprietorship = {
+proprietorship = str_to_uni_dict({
         "text" : "example text",
         "fields" : {"proprietors": [
                 {   "name": {
@@ -30,9 +31,9 @@ proprietorship = {
         },
         "deeds" : [],
         "notes": []
-}
+})
 
-simple_title = {
+simple_title = str_to_uni_dict({
     "title_number": "TEST123456789",
     "payment": {
         "price_paid": "3100.00"
@@ -45,7 +46,7 @@ simple_title = {
     "restrictive_covenants" : [],
     "restrictions" : [],
     "bankruptcy" : []
-}
+})
 
 class TestTitleValidation(unittest.TestCase):
     def test_can_validate_valid_title(self):

@@ -7,18 +7,18 @@ from datatypes.core import DataDoesNotMatchSchemaException
 class TestAddressValidation(unittest.TestCase):
     def test_address_with_no_line_one_fails_validation(self):
         address_without_postcode = {
-            'city': 'sometown',
-            'postcode': 'AB123VC'
+            u'city': u'sometown',
+            u'postcode': u'AB123VC'
         }
 
         self.assertRaises(DataDoesNotMatchSchemaException, address_validator.validate, address_without_postcode)
 
     def test_can_create_address_with_required_mandatory_fields(self):
         address_with_mandatory_fields = {
-            'line_one': '1 Acacia Avenue',
-            'city': 'Somewhere',
-            'postcode': 'AL35PU',
-            'country': 'GB'
+            u'line_one': u'1 Acacia Avenue',
+            u'city': u'Somewhere',
+            u'postcode': u'AL35PU',
+            u'country': u'GB'
         }
 
         try:
@@ -29,7 +29,7 @@ class TestAddressValidation(unittest.TestCase):
     def test_length_of_fields_is_checked(self):
         try:
             address_validator.validate({
-                'line_one': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'  # over 40 chars
+                u'line_one': u'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'  # over 40 chars
             })
             self.fail("Should have thrown exception")
         except DataDoesNotMatchSchemaException as e:

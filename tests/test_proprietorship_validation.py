@@ -4,8 +4,9 @@ from copy import deepcopy
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 from datatypes import proprietorship_validator
+from datatypes.core import str_to_uni_dict
 
-proprietorship = {
+proprietorship = str_to_uni_dict({
         "text" : "example text",
         "fields" : {"proprietors": [
                 {   "name": {
@@ -19,7 +20,7 @@ proprietorship = {
         },
         "deeds" : [],
         "notes": []
-}
+})
 
 class TestProprietorshipValidation(unittest.TestCase):
 

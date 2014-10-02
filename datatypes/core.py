@@ -109,3 +109,14 @@ class SingleValueValidator(Validator):
 
     def define_error_message(self):
         raise ErrorMessageNotDefined()
+
+
+def str_to_uni_dict(input):
+    if isinstance(input, dict):
+        return {str_to_uni_dict(key): str_to_uni_dict(value) for key, value in input.iteritems()}
+    elif isinstance(input, list):
+        return [str_to_uni_dict(element) for element in input]
+    elif isinstance(input, str):
+        return input.decode("utf-8") if "decode" in dir(input) else input
+    else:
+        return input

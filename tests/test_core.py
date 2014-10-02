@@ -37,23 +37,23 @@ class TestDictValidator(DictionaryValidator):
 class TestValidationCore(unittest.TestCase):
     def test_can_filter_none_and_self_from_dictionary(self):
         validator = TestDictValidator()
-        dictionary = {'a': 1, 'b': '2', 'c': None, 'self': self}
+        dictionary = {u'a': 1, u'b': u'2', u'c': None, u'self': self}
         result = validator.clean_input(dictionary)
 
         self.assertFalse(None in result.itervalues(),
                          "Result should not contain None: " + repr(result))
 
-        self.assertFalse('c' in result.iterkeys(),
+        self.assertFalse(u'c' in result.iterkeys(),
                          "Result should not contain key 'c' as this is set to None: " + repr(result))
 
     def test_can_filter_none_from_nested_dictionary(self):
         validator = TestDictValidator()
-        dictionary = {'a': None, 'b': {'c': None, 'd': 'd'}}
+        dictionary = {u'a': None, u'b': {u'c': None, u'd': u'd'}}
         result = validator.clean_input(dictionary)
 
-        self.assertFalse('a' in result.iterkeys())
-        sub_dictionary = result['b']
-        self.assertFalse('c' in sub_dictionary.iterkeys())
+        self.assertFalse(u'a' in result.iterkeys())
+        sub_dictionary = result[u'b']
+        self.assertFalse(u'c' in sub_dictionary.iterkeys())
 
     def test_single_value_validator_raises_correct_error_messages(self):
         class TestDatType(SingleValueValidator):
@@ -77,7 +77,7 @@ class TestValidationCore(unittest.TestCase):
         validator = TestDictValidator()
 
         try:
-            validator.validate({'foo': '1234', 'bar': '12'})
+            validator.validate({u'foo': u'1234', u'bar': u'12'})
             self.fail("exception should have been thrown")
         except DataDoesNotMatchSchemaException as exception:
             self.assertEqual(exception.field_errors['foo'], 'sausages')
@@ -135,7 +135,7 @@ class TestValidationCore(unittest.TestCase):
 
     def test_can_validate_single_field_in_wtf(self):
         class FakeField(object):
-            data = "ab"
+            data = u"ab"
 
         try:
             validator = WtfTestDataType().wtform_validator()

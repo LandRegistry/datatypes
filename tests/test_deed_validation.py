@@ -4,8 +4,9 @@ from copy import deepcopy
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 from datatypes import deed_validator
+from datatypes.core import str_to_uni_dict
 
-people = [ { "title" : "Mrs",
+people = str_to_uni_dict([ { "title" : "Mrs",
             "full_name": "Bootata Smick",
             "decoration": ""
         },
@@ -13,13 +14,13 @@ people = [ { "title" : "Mrs",
             "full_name": "Mishmisha Okasha",
             "decoration": ""
         }
-]
+])
 
-deed =  {
+deed =  str_to_uni_dict({
     "type" : "Transfer",
     "date": "01.06.1996",
     "parties": people
-}
+})
 
 class TestDeedValidation(unittest.TestCase):
 

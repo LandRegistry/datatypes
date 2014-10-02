@@ -4,6 +4,7 @@ import geojson
 
 from datatypes.validators import ogc_urn_validator
 from datatypes.core import DictionaryValidator, SingleValueValidator
+from datatypes.core import str_to_uni_dict
 
 
 # This isn't intended to be a full GeoJSON validator, rather a constraining
@@ -55,7 +56,7 @@ class GeoJson(DictionaryValidator):
 
     def clean_input(self, dictionary):
         try:
-            geojson.loads(json.dumps(dictionary))
+            str_to_uni_dict(geojson.loads(json.dumps(dictionary)))
         except ValueError as exception:
             raise DataDoesNotMatchSchemaException(cause=exception, message='Valid GeoJSON is required')
 
@@ -79,6 +80,6 @@ class GeoJsonString(SingleValueValidator):
 
     def clean_input(self, data):
         try:
-            return geojson.loads(data)
+            return str_to_uni_dict(geojson.loads(data))
         except Exception as exception:
             raise DataDoesNotMatchSchemaException(cause=exception, message=self.error_message)

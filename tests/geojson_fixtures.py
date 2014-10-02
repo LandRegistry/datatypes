@@ -1,4 +1,6 @@
-sample_geojson_polygon = {
+from datatypes.core import str_to_uni_dict
+
+sample_geojson_polygon = str_to_uni_dict({
     "type": "Feature",
 
     "crs": {
@@ -24,9 +26,9 @@ sample_geojson_polygon = {
         'foo': 'bar',
         'bang': 'boom'
     }
-}
+})
 
-sample_geojson_from_migration = {
+sample_geojson_from_migration = str_to_uni_dict({
     "type": "Feature",
     "geometry": {
         "type": "Polygon",
@@ -57,9 +59,9 @@ sample_geojson_from_migration = {
             "name": "urn:ogc:def:crs:EPSG:27700"
         }
     }
-}
+})
 
-sample_invalid_geojson = {
+sample_invalid_geojson = str_to_uni_dict({
     "type": "Feature",
     "geometry": {
         "type": "Polygon",
@@ -81,9 +83,9 @@ sample_invalid_geojson = {
             "name": "urn:ogc:def:crs:EPSG:27700"
         }
     }
-}
+})
 
-sample_lincolns_inn_fields = {
+sample_lincolns_inn_fields = str_to_uni_dict({
     "type": "Feature",
     "crs": {
         "type": "name",
@@ -121,9 +123,9 @@ sample_lincolns_inn_fields = {
     "properties": {
         "name": "Lincoln's Inn Fields Easement"
     }
-}
+})
 
-sample_invalid_point = {
+sample_invalid_point = str_to_uni_dict({
     "type": "Feature",
 
     "geometry": {
@@ -134,4 +136,4 @@ sample_invalid_point = {
     "properties": {
         "name": "Dinagat Islands"
     }
-}
+})

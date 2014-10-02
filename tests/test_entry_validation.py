@@ -4,8 +4,9 @@ from copy import deepcopy
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 from datatypes import entry_validator
+from datatypes.core import str_to_uni_dict
 
-deeds =  [{
+deeds =  str_to_uni_dict([{
     "type" : "Transfer",
     "date": "01.06.1996",
     "parties": [ { "title" : "Mrs",
@@ -17,9 +18,9 @@ deeds =  [{
               "decoration": ""
               }
         ]
-}]
+}])
 
-entry = {
+entry = str_to_uni_dict({
         "text" : "example text",
         "fields" : {"field1" : "value1",
                     "field2" : "value2",
@@ -27,7 +28,7 @@ entry = {
 
         "deeds" : [],
         "notes": []
-}
+})
 
 class TestEntryValidation(unittest.TestCase):
 
@@ -45,22 +46,22 @@ class TestEntryValidation(unittest.TestCase):
             self.fail("Could not validate entry: " + repr(e))
 
     def test_does_not_validate_entry_without_text(self):
-        invalid_entry = deepcopy(entry)
+        invalid_entry = str_to_uni_dict(deepcopy(entry))
         del invalid_entry["text"]
         self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "text is a required field", entry_validator.validate, invalid_entry)
 
     def test_does_not_validate_entry_without_fields(self):
-        invalid_entry = deepcopy(entry)
+        invalid_entry = str_to_uni_dict(deepcopy(entry))
         del invalid_entry["fields"]
         self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "fields are required", entry_validator.validate, invalid_entry)
 
     def test_does_not_validate_entry_without_deeds(self):
-        invalid_entry = deepcopy(entry)
+        invalid_entry = str_to_uni_dict(deepcopy(entry))
         del invalid_entry["deeds"]
         self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "deeds are required", entry_validator.validate, invalid_entry)
 
     def test_does_not_validate_entry_without_notes(self):
-        invalid_entry = deepcopy(entry)
+        invalid_entry = str_to_uni_dict(deepcopy(entry))
         del invalid_entry["notes"]
         self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "notes are required", entry_validator.validate, invalid_entry)
 
