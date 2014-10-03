@@ -1,5 +1,7 @@
-voluptuous==0.8.5
-pycountry==1.8
-uk-postcode-utils==0.1.0
-Flask-WTF==0.10.0
-geojson==1.0.7
+voluptuous
+pycountry
+uk-postcode-utils
+Flask
+Flask-WTF
+geojson
+simplejson
