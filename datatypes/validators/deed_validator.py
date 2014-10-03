@@ -3,13 +3,9 @@ from datatypes.core import DictionaryValidator
 
 from datatypes.validators import person_validator
 
-from datetime import datetime
-def Date(format='%d.%m.%Y'):
-    return lambda value: datetime.strptime(value, format)
-
 deed_schema = {
     Required("type"): All(unicode),
-    Required("date"): Date(),
+    Required("date"):  All(unicode),
     Required("parties"): All(Length(min=2), [person_validator.person_schema])
 }
 

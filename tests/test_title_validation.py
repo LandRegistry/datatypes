@@ -8,7 +8,8 @@ from datatypes import title_validator
 from datatypes.core import unicoded
 
 dumb_entry = unicoded({
-    "text" : "some text",
+    "template" : "some text",
+    "full_text" : "some text",
     "fields" : {
             "field_name_1": "something",
             "field_name_2": {"some": "other thing"}
@@ -18,7 +19,8 @@ dumb_entry = unicoded({
 })
 
 proprietorship = unicoded({
-        "text" : "example text",
+        "template" : "example text",
+        "full_text" : "example text",
         "fields" : {"proprietors": [
                 {   "name": {
                         "title" : "Balarot",
@@ -35,9 +37,6 @@ proprietorship = unicoded({
 
 simple_title = unicoded({
     "title_number": "TEST123456789",
-    "payment": {
-        "price_paid": "3100.00"
-    },
     "proprietorship": proprietorship,
     "property_description": dumb_entry,
     "price_paid": dumb_entry,
@@ -45,7 +44,9 @@ simple_title = unicoded({
     "easements":[],
     "restrictive_covenants" : [],
     "restrictions" : [],
-    "bankruptcy" : []
+    "bankruptcy" : [],
+    "charges" : [],
+    "other" : []
 })
 
 class TestTitleValidation(unittest.TestCase):
@@ -59,11 +60,6 @@ class TestTitleValidation(unittest.TestCase):
         bad_title = deepcopy(simple_title)
         del bad_title["title_number"]
         self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "title_number is a required field", title_validator.validate, bad_title)
-
-    def test_cannot_validate_invalid_title_price_paid(self):
-        bad_title = deepcopy(simple_title)
-        bad_title["payment"]["price_paid"] = "£3100.00"
-        self.assertRaises(DataDoesNotMatchSchemaException, title_validator.validate, bad_title)
 
     def test_cannot_validate_title_without_proprietorship(self):
         bad_title = deepcopy(simple_title)
