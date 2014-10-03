@@ -21,7 +21,8 @@ deeds =  unicoded([{
 }])
 
 entry = unicoded({
-        "text" : "example text",
+        "template" : "example text",
+        "full_text" : "example text",
         "fields" : {"field1" : "value1",
                     "field2" : "value2",
                     "fieldN" : {"object_field": "object_value"}},
@@ -45,10 +46,15 @@ class TestEntryValidation(unittest.TestCase):
         except DataDoesNotMatchSchemaException as e:
             self.fail("Could not validate entry: " + repr(e))
 
-    def test_does_not_validate_entry_without_text(self):
+    def test_does_not_validate_entry_without_template(self):
         invalid_entry = unicoded(deepcopy(entry))
-        del invalid_entry["text"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "text is a required field", entry_validator.validate, invalid_entry)
+        del invalid_entry["template"]
+        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "template is a required field", entry_validator.validate, invalid_entry)
+
+    def test_does_not_validate_entry_without_full_text(self):
+        invalid_entry = unicoded(deepcopy(entry))
+        del invalid_entry["full_text"]
+        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "full_text is a required field", entry_validator.validate, invalid_entry)
 
     def test_does_not_validate_entry_without_fields(self):
         invalid_entry = unicoded(deepcopy(entry))

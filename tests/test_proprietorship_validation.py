@@ -7,7 +7,8 @@ from datatypes import proprietorship_validator
 from datatypes.core import unicoded
 
 proprietorship = unicoded({
-        "text" : "example text",
+        "template" : "example text",
+        "full_text" : "example text",
         "fields" : {"proprietors": [
                 {   "name": {
                         "title" : "Balarot",
