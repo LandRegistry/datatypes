@@ -1,6 +1,6 @@
-from datatypes.core import str_to_uni_dict
+from datatypes.core import unicoded
 
-sample_geojson_polygon = str_to_uni_dict({
+sample_geojson_polygon = unicoded({
     "type": "Feature",
 
     "crs": {
@@ -28,7 +28,7 @@ sample_geojson_polygon = str_to_uni_dict({
     }
 })
 
-sample_geojson_from_migration = str_to_uni_dict({
+sample_geojson_from_migration = unicoded({
     "type": "Feature",
     "geometry": {
         "type": "Polygon",
@@ -61,7 +61,7 @@ sample_geojson_from_migration = str_to_uni_dict({
     }
 })
 
-sample_invalid_geojson = str_to_uni_dict({
+sample_invalid_geojson = unicoded({
     "type": "Feature",
     "geometry": {
         "type": "Polygon",
@@ -85,7 +85,7 @@ sample_invalid_geojson = str_to_uni_dict({
     }
 })
 
-sample_lincolns_inn_fields = str_to_uni_dict({
+sample_lincolns_inn_fields = unicoded({
     "type": "Feature",
     "crs": {
         "type": "name",
@@ -125,7 +125,7 @@ sample_lincolns_inn_fields = str_to_uni_dict({
     }
 })
 
-sample_invalid_point = str_to_uni_dict({
+sample_invalid_point = unicoded({
     "type": "Feature",
 
     "geometry": {

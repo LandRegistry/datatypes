@@ -4,9 +4,9 @@ from copy import deepcopy
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 from datatypes import proprietorship_validator
-from datatypes.core import str_to_uni_dict
+from datatypes.core import unicoded
 
-proprietorship = str_to_uni_dict({
+proprietorship = unicoded({
         "text" : "example text",
         "fields" : {"proprietors": [
                 {   "name": {

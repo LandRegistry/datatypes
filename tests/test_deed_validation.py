@@ -4,9 +4,9 @@ from copy import deepcopy
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 from datatypes import deed_validator
-from datatypes.core import str_to_uni_dict
+from datatypes.core import unicoded
 
-people = str_to_uni_dict([ { "title" : "Mrs",
+people = unicoded([ { "title" : "Mrs",
             "full_name": "Bootata Smick",
             "decoration": ""
         },
@@ -16,7 +16,7 @@ people = str_to_uni_dict([ { "title" : "Mrs",
         }
 ])
 
-deed =  str_to_uni_dict({
+deed =  unicoded({
     "type" : "Transfer",
     "date": "01.06.1996",
     "parties": people

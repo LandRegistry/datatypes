@@ -111,11 +111,11 @@ class SingleValueValidator(Validator):
         raise ErrorMessageNotDefined()
 
 
-def str_to_uni_dict(input):
+def unicoded(input):
     if isinstance(input, dict):
-        return {str_to_uni_dict(key): str_to_uni_dict(value) for key, value in input.iteritems()}
+        return {unicoded(key): unicoded(value) for key, value in input.iteritems()}
     elif isinstance(input, list):
-        return [str_to_uni_dict(element) for element in input]
+        return [unicoded(element) for element in input]
     elif isinstance(input, str):
         return input.decode("utf-8") if "decode" in dir(input) else input
     else:

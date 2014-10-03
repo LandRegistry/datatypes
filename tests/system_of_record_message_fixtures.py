@@ -1,8 +1,8 @@
-from datatypes.core import str_to_uni_dict
+from datatypes.core import unicoded
 
 # -*- coding: utf-8 -*-
 
-valid_system_of_record_input_message_with_two_tags = str_to_uni_dict({
+valid_system_of_record_input_message_with_two_tags = unicoded({
     'object': {
         'object_id': 'AB12345',
         'data': '<data>',
@@ -23,7 +23,7 @@ valid_system_of_record_input_message_with_two_tags = str_to_uni_dict({
     }
 })
 
-valid_message_without_tags = str_to_uni_dict({
+valid_message_without_tags = unicoded({
     'object': {
         'object_id': 'AB12345',
         'data': '<data>',
@@ -33,7 +33,7 @@ valid_message_without_tags = str_to_uni_dict({
     }
 })
 
-invalid_message_without_data = str_to_uni_dict({
+invalid_message_without_data = unicoded({
 
     'object': {
         'object_id': 'AB12345',
@@ -49,7 +49,7 @@ invalid_message_without_data = str_to_uni_dict({
     }
 })
 
-invalid_message_with_duplicate_tag_value = str_to_uni_dict({
+invalid_message_with_duplicate_tag_value = unicoded({
     'object': {
         'object_id': 'AB12345',
         'data': '<data>',
@@ -70,7 +70,7 @@ invalid_message_with_duplicate_tag_value = str_to_uni_dict({
     }
 })
 
-another_invalid_message_with_duplicate_tag_value = str_to_uni_dict({
+another_invalid_message_with_duplicate_tag_value = unicoded({
     'object': {
         'object_id': 'AB12345',
         'data': '<data>',
@@ -91,7 +91,7 @@ another_invalid_message_with_duplicate_tag_value = str_to_uni_dict({
     }
 })
 
-invalid_message_without_object = str_to_uni_dict({
+invalid_message_without_object = unicoded({
     'foo': {
         'created_by': 'The Mint',
         'initial_request_timestamp': '123456',

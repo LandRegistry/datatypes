@@ -4,9 +4,9 @@ from copy import deepcopy
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 from datatypes import person_validator
-from datatypes.core import str_to_uni_dict
+from datatypes.core import unicoded
 
-person =  str_to_uni_dict({
+person =  unicoded({
     "title" : "Mrs",
     "full_name": "Bootata Smick",
     "decoration": ""

@@ -5,9 +5,9 @@ from copy import deepcopy
 from datatypes.exceptions import DataDoesNotMatchSchemaException
 
 from datatypes import title_validator
-from datatypes.core import str_to_uni_dict
+from datatypes.core import unicoded
 
-dumb_entry = str_to_uni_dict({
+dumb_entry = unicoded({
     "text" : "some text",
     "fields" : {
             "field_name_1": "something",
@@ -17,7 +17,7 @@ dumb_entry = str_to_uni_dict({
     "notes" : []
 })
 
-proprietorship = str_to_uni_dict({
+proprietorship = unicoded({
         "text" : "example text",
         "fields" : {"proprietors": [
                 {   "name": {
@@ -33,7 +33,7 @@ proprietorship = str_to_uni_dict({
         "notes": []
 })
 
-simple_title = str_to_uni_dict({
+simple_title = unicoded({
     "title_number": "TEST123456789",
     "payment": {
         "price_paid": "3100.00"

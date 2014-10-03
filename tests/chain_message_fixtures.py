@@ -1,7 +1,7 @@
-from datatypes.core import str_to_uni_dict
+from datatypes.core import unicoded
 
 # This message has the generated database IDs etc in it
-valid_chain_message = str_to_uni_dict({
+valid_chain_message = unicoded({
     'message_envelope': {
         'caused_by_blockchain_insert_id': 3954,
 
@@ -59,7 +59,7 @@ valid_chain_message = str_to_uni_dict({
 })
 
 # This message does not have the generated database IDs in it
-another_valid_message = str_to_uni_dict({
+another_valid_message = unicoded({
     'message_envelope': {
         'caused_by_blockchain_insert_id': 4188,
         'messages': [
