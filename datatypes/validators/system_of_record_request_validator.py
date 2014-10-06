@@ -13,7 +13,7 @@ schema = {
         Optional('initial_request_timestamp'): Coerce(long),
         Optional('reason_for_change'): unicode,
 
-        Optional('chains'): [
+        Required('chains'): [
             {
                 Required('chain_name'): unicode,
                 Required('chain_value'): unicode,
