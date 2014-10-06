@@ -7,12 +7,11 @@ from datatypes.validators import system_of_record_request_validator
 schema = {
     Required('message_envelope'): {
         Required('caused_by_blockchain_insert_id'): Coerce(int),
-        Required('messages'): [
+        Required('message'):
             {
                 Required('message'): system_of_record_request_validator.schema,
                 Required('chain_name'): unicode,
-                }
-        ]
+            }
     }
 }
 
