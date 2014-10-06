@@ -28,9 +28,9 @@ geo_json_schema = {
     Required('geometry'): {
         Required('type'): All(unicode, In(['Polygon', 'MultiPolygon'])),
         Required('coordinates'): [
-            [
-                All(Length(min=2, max=2), [float])
-            ]
+            #[
+            #    All(Length(min=2, max=2), [float])
+            #]
         ]
     },
 
