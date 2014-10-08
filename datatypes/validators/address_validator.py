@@ -1,12 +1,11 @@
 from voluptuous import Required, Optional, All, Length, Coerce, Match
 from datatypes.core import DictionaryValidator
 from datatypes.validators import postcode_validator, iso_country_code_validator
+from datatypes.validators.common_validators import NotEmpty
 
-def Empty():
-    return lambda value: value.strip().isspace()
 
 address_schema = {
-    Required("full_address"): All(unicode, Empty()),
+    Required("full_address"): All(unicode, NotEmpty()),
     Required("house_no"): All(Coerce(unicode)),
     Required("street_name"): All(unicode),
     Required("town"): All(unicode),

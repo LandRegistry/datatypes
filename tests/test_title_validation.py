@@ -37,6 +37,9 @@ proprietorship = unicoded({
 
 simple_title = unicoded({
     "title_number": "TEST123456789",
+    "class_of_title": "Absolute",
+    "tenure": "Freehold",
+    "edition_date": "20-12-2013",
     "proprietorship": proprietorship,
     "property_description": dumb_entry,
     "price_paid": dumb_entry,
@@ -45,6 +48,7 @@ simple_title = unicoded({
     "restrictive_covenants" : [],
     "restrictions" : [],
     "bankruptcy" : [],
+    "h_schedule": [],
     "charges" : [],
     "other" : []
 })
@@ -56,50 +60,15 @@ class TestTitleValidation(unittest.TestCase):
         except DataDoesNotMatchSchemaException as e:
             self.fail("Could not validate title: " + repr(e))
 
-    def test_cannot_validate_invalid_title_number(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["title_number"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "title_number is a required field", title_validator.validate, bad_title)
+    def test_cannot_validate_title_without_required_field(self):
+        for field in ["proprietorship", "property_description", "price_paid", "provisions", "easements", "restrictive_covenants", "restrictions", "bankruptcy", "charges", "other", "h_schedule"]:
+            bad_title = deepcopy(simple_title)
+            del bad_title[field]
+            self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "%s is a required field" % field, title_validator.validate, bad_title)
 
-    def test_cannot_validate_title_without_proprietorship(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["proprietorship"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "proprietorship is a required field", title_validator.validate, bad_title)
-
-    def test_cannot_validate_title_without_property_description(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["property_description"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "property_description is a required field", title_validator.validate, bad_title)
-
-    def test_cannot_validate_title_without_price_paid(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["price_paid"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "price_paid is a required field", title_validator.validate, bad_title)
-
-    def test_cannot_validate_title_without_provisions(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["provisions"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "provisions is a required field", title_validator.validate, bad_title)
-
-    def test_cannot_validate_title_without_easements(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["easements"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "easements is a required field", title_validator.validate, bad_title)
-
-    def test_cannot_validate_title_without_restrictive_covenants(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["restrictive_covenants"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "restrictive_covenants is a required field", title_validator.validate, bad_title)
-
-    def test_cannot_validate_title_without_restrictions(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["restrictions"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "restrictions is a required field", title_validator.validate, bad_title)
-
-    def test_cannot_validate_title_without_bankruptcy(self):
-        bad_title = deepcopy(simple_title)
-        del bad_title["bankruptcy"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "bankruptcy is a required field", title_validator.validate, bad_title)
-
-
+    def test_cannot_validate_title_for_required_and_non_empty_fields(self):
+        for field in ["class_of_title", "tenure", "title_number"]:
+            bad_title = deepcopy(simple_title)
+            del bad_title[field]
+            self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "%s is a required field, must not be an empty string" % field, title_validator.validate, bad_title)
 
