@@ -48,7 +48,7 @@ simple_title = unicoded({
     "restrictive_covenants" : [],
     "restrictions" : [],
     "bankruptcy" : [],
-    "h_schedule": [],
+    "h_schedule": dumb_entry,
     "charges" : [],
     "other" : []
 })
@@ -71,4 +71,11 @@ class TestTitleValidation(unittest.TestCase):
             bad_title = deepcopy(simple_title)
             del bad_title[field]
             self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "%s is a required field, must not be an empty string" % field, title_validator.validate, bad_title)
+
+    def test_cannot_validate_simple_fields_that_should_have_basic_entry_type(self):
+        for field in ["property_description", "price_paid", "h_schedule"]:
+            bad_title = deepcopy(simple_title)
+            bad_title[field] = [] # replace dumb entry with empty list
+            self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "%s is a required field" % field, title_validator.validate, bad_title)
+
 

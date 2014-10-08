@@ -35,7 +35,7 @@ title_schema = {
 
     Required("price_paid"): entry_validator.entry_schema,
 
-    Required("h_schedule"): [entry_validator.entry_schema],
+    Required("h_schedule"): entry_validator.entry_schema,
 
     Required("charges"): [entry_validator.entry_schema],
 
