@@ -10,7 +10,7 @@ proprietorship_schema = {
     Required("fields"): {
         Required("proprietors"): All( Length(min=1),
             [ { Required("name"): All(proprietor_validator.proprietor_schema, extra=True),
-                Required("address"): object  # TBC - settle on address format!
+                Required("addresses"): object  # TBC - settle on address format!
               }
             ])
     },
@@ -29,7 +29,7 @@ class Proprietorship(DictionaryValidator):
             "fields": "fields are required",
             "fields.proprietors": "proprietors are required and there must be at least 1",
             "fields.proprietors.name": "proprietors name is required",
-            "fields.proprietors.address": "proprietors address is required",
+            "fields.proprietors.addresses": "proprietors address is required",
             "deeds": "deeds are required",
             "notes": "notes are required"
         }

@@ -29,7 +29,7 @@ proprietorship = unicoded({
                         "decoration" : "Elegant",
                         "extra_field_to_ignore" : "should not cause validation failure"
                     },
-                    "address": object
+                    "addresses": object
                 }
             ]
         },
@@ -41,7 +41,7 @@ simple_title = unicoded({
     "title_number": "TEST123456789",
     "class_of_title": "Absolute",
     "tenure": "Freehold",
-    "edition_date": "2013-12-01",
+    "edition_date": "20-12-2013",
     "proprietorship": proprietorship,
     "property_description": dumb_entry,
     "price_paid": dumb_entry,

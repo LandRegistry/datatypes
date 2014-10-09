@@ -15,7 +15,23 @@ proprietorship = unicoded({
                         "full_name" : "Cheesoir",
                         "decoration" : "Elegant"
                     },
-                    "address": object
+                    "addresses": object
+                }
+            ]
+        },
+        "deeds" : [],
+        "notes": []
+})
+
+proprietorship_without_addressess = unicoded({
+        "template" : "example text",
+        "full_text" : "example text",
+        "fields" : {"proprietors": [
+                {   "name": {
+                        "title" : "Balarot",
+                        "full_name" : "Cheesoir",
+                        "decoration" : "Elegant"
+                    }
                 }
             ]
         },
@@ -71,11 +87,9 @@ class TestProprietorshipValidation(unittest.TestCase):
 
 
     def test_cannot_validate_proprietorship_without_address(self):
-        invalid_proprietorship = deepcopy(proprietorship)
-        del invalid_proprietorship["fields"]["proprietors"][0]["address"] #ouch
         try:
-            proprietorship_validator.validate(invalid_proprietorship)
+            proprietorship_validator.validate(proprietorship_without_addressess)
         except DataDoesNotMatchSchemaException as e:
-            errors = e.field_errors.get("fields.proprietors.address")
+            errors = e.field_errors.get("fields.proprietors.addresses")
             self.assertIsNotNone(errors)
             self.assertEquals(errors, "proprietors address is required")
