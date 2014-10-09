@@ -1,9 +1,8 @@
-import datetime
+import dateutil.parser
 
 
-def Date(format='%d-%m-%Y'):
-    return lambda value: datetime.datetime.strptime(value, format)
-
+def Date():
+    return lambda value: dateutil.parser.parse(value)
 
 def NotEmpty():
     return lambda value: value.strip().isspace()
