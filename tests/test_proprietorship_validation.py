@@ -31,6 +31,14 @@ class TestProprietorshipValidation(unittest.TestCase):
         except DataDoesNotMatchSchemaException as e:
             self.fail("Could not validate entry: " + repr(e))
 
+    def test_can_validate_valid_proprietorship_with_extra_fields_in_proprietor(self):
+        test_proprietorship = deepcopy(proprietorship)
+        test_proprietorship["fields"]["proprietors"][0]["name"]["something"] = "random"
+        try:
+            proprietorship_validator.validate(test_proprietorship)
+        except DataDoesNotMatchSchemaException as e:
+            self.fail("Could not validate entry: " + repr(e))
+
     def test_cannot_validate_proprietorship_without_proprietors(self):
         invalid_proprietorship = deepcopy(proprietorship)
         del invalid_proprietorship["fields"]["proprietors"]

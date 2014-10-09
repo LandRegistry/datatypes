@@ -6,20 +6,21 @@ from datatypes.exceptions import DataDoesNotMatchSchemaException
 from datatypes import deed_validator
 from datatypes.core import unicoded
 
-people = unicoded([ { "title" : "Mrs",
+proprietors = unicoded([ { "title" : "Mrs",
             "full_name": "Bootata Smick",
             "decoration": ""
         },
         {   "title" : "Mr",
             "full_name": "Mishmisha Okasha",
-            "decoration": ""
+            "decoration": "",
+            "an_extra_field": "to be ignored"
         }
 ])
 
 deed =  unicoded({
     "type" : "Transfer",
     "date": "01.06.1996",
-    "parties": people
+    "parties": proprietors
 })
 
 class TestDeedValidation(unittest.TestCase):
@@ -47,7 +48,7 @@ class TestDeedValidation(unittest.TestCase):
 
     def test_does_not_validate_deed_without_at_least_two_parties(self):
         invalid_deed = deepcopy(deed)
-        invalid_deed["parties"] = [people[0]]
+        invalid_deed["parties"] = [proprietors[0]]
         self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "at least two parties are required", deed_validator.validate, invalid_deed)
 
 

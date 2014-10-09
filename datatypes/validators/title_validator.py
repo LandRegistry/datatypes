@@ -1,6 +1,6 @@
 import datetime
 
-from voluptuous import Required, All
+from voluptuous import Required, All, Optional
 
 from datatypes.core import DictionaryValidator
 from datatypes.validators import geo_json_validator, entry_validator, proprietorship_validator
@@ -33,13 +33,13 @@ title_schema = {
 
     Required("provisions"): [entry_validator.entry_schema],
 
-    Required("price_paid"): entry_validator.entry_schema,
-
-    Required("h_schedule"): entry_validator.entry_schema,
-
     Required("charges"): [entry_validator.entry_schema],
 
-    Required("other"): [entry_validator.entry_schema]
+    Required("other"): [entry_validator.entry_schema],
+
+    Optional("price_paid"): entry_validator.entry_schema,
+
+    Optional("h_schedule"): entry_validator.entry_schema,
 
 }
 
@@ -56,13 +56,13 @@ class Title(DictionaryValidator):
             "class_of_title": "class_of_title is a required field, must not be an empty string",
             "proprietorship": "proprietorship is a required field",
             "property_description": "property_description is a required field",
-            "price_paid": "price_paid is a required field",
+            "price_paid": "price_paid is an optional entry field",
             "provisions": "provisions is a required field",
             "easements": "easements is a required field",
             "restrictive_covenants": "restrictive_covenants is a required field",
             "restrictions": "restrictions is a required field",
             "bankruptcy": "bankruptcy is a required field",
-            "h_schedule": "h_schedule is a required field",
+            "h_schedule": "h_schedule is an optional entry field",
             "charges": "charges is a required field",
             "other": "other is a required field"
         }

@@ -1,17 +1,16 @@
-from voluptuous import Required
+from voluptuous import Required, Extra
 from datatypes.core import DictionaryValidator
 
-person_schema = {
-    Required("title"): unicode,
-    Required("full_name"): unicode,
-    Required("decoration"): unicode
+proprietor_schema = {
+        Required("title"): unicode,
+        Required("full_name"): unicode,
+        Required("decoration"): unicode
 }
 
-
-class Person(DictionaryValidator):
+class Proprietor(DictionaryValidator):
 
     def define_schema(self):
-        return person_schema
+            return proprietor_schema
 
     def define_error_dictionary(self):
         return {

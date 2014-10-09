@@ -2,14 +2,14 @@ from voluptuous import Required, All, Length
 from datatypes.core import DictionaryValidator
 
 from datatypes.validators import deed_validator
-from datatypes.validators import person_validator
+from datatypes.validators import proprietor_validator
 
 proprietorship_schema = {
     Required("template"): All(unicode),
     Required("full_text"): All(unicode),
     Required("fields"): {
         Required("proprietors"): All( Length(min=1),
-            [ { Required("name"): person_validator.person_schema,
+            [ { Required("name"): All(proprietor_validator.proprietor_schema, extra=True),
                 Required("address"): object  # TBC - settle on address format!
               }
             ])

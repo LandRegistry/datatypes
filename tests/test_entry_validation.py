@@ -15,7 +15,8 @@ deeds =  unicoded([{
               },
                 { "title" : "Mr",
                 "full_name": "Mishmisha Okasha",
-              "decoration": ""
+              "decoration": "",
+              "a_random_key_to_ignore": "should not cause a validation failure"
               }
         ]
 }])
