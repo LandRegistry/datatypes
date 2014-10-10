@@ -18,9 +18,59 @@ proprietors = unicoded([ { "title" : "Mrs",
 ])
 
 deed =  unicoded({
-    "type" : "Transfer",
-    "date": "01.06.1996",
-    "parties": proprietors
+   "type":"Conveyance",
+   "date":"2014-02-01",
+   "parties":[
+      [
+         {
+            "title":"",
+            "decoration":"",
+            "first_name":"",
+            "last_name":"Bishop",
+            "non_private_individual_name":"",
+            "full_name":"Paul Bishop",
+            "country_incorporation":"",
+            "company_registration_number":"",
+            "name_information":"",
+            "occupation":"",
+            "name_supplementary":"",
+            "trading_name":"",
+            "trust_type":"",
+            "name_category":"",
+            "charity_name":"",
+            "local_authority_area":"",
+            "alias_names":[
+
+            ]
+         }
+      ],
+      [
+         {
+            "title":"",
+            "decoration":"",
+            "first_name":"",
+            "last_name":"Smith",
+            "non_private_individual_name":"",
+            "full_name":"James Smith",
+            "country_incorporation":"",
+            "company_registration_number":"",
+            "name_information":"",
+            "occupation":"",
+            "name_supplementary":"",
+            "trading_name":"",
+            "trust_type":"",
+            "name_category":"",
+            "charity_name":"",
+            "local_authority_area":"",
+            "alias_names":[
+
+            ]
+         }
+      ]
+   ],
+   "rentcharge_amount":"",
+   "payment_detail":"",
+   "lease_term":""
 })
 
 class TestDeedValidation(unittest.TestCase):
