@@ -73,6 +73,15 @@ deed =  unicoded({
    "lease_term":""
 })
 
+deed_no_parties =  unicoded({
+   "type":"Conveyance",
+   "date":"2014-02-01",
+   "parties":[],
+   "rentcharge_amount":"",
+   "payment_detail":"",
+   "lease_term":""
+})
+
 class TestDeedValidation(unittest.TestCase):
 
     def test_can_validate_valid_deed(self):
@@ -80,6 +89,13 @@ class TestDeedValidation(unittest.TestCase):
             deed_validator.validate(deed)
         except DataDoesNotMatchSchemaException as e:
             self.fail("Could not validate deed: " + repr(e))
+
+    def test_can_validate_valid_deed_with_no_parties(self):
+        try:
+            deed_validator.validate(deed_no_parties)
+        except DataDoesNotMatchSchemaException as e:
+            self.fail("Could not validate deed: " + repr(e))
+
 
     def test_does_not_validate_deed_without_type(self):
         invalid_deed = deepcopy(deed)
@@ -94,11 +110,4 @@ class TestDeedValidation(unittest.TestCase):
     def test_does_not_validate_deed_without_parties(self):
         invalid_deed = deepcopy(deed)
         del invalid_deed["parties"]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "at least two parties are required", deed_validator.validate, invalid_deed)
-
-    def test_does_not_validate_deed_without_at_least_two_parties(self):
-        invalid_deed = deepcopy(deed)
-        invalid_deed["parties"] = [proprietors[0]]
-        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "at least two parties are required", deed_validator.validate, invalid_deed)
-
-
+        self.assertRaisesRegexp(DataDoesNotMatchSchemaException, "parties is a required field", deed_validator.validate, invalid_deed)

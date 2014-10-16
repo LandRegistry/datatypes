@@ -4,7 +4,7 @@ from datatypes.core import DictionaryValidator
 deed_schema = {
     Required("type"): All(unicode),
     Required("date"):  All(unicode),
-    Required("parties"): All(Length(min=2), [ object] , extra=True)
+    Required("parties"): All( [object] , extra=True)
 }
 
 class Deed(DictionaryValidator):
@@ -16,5 +16,5 @@ class Deed(DictionaryValidator):
         return {
             "type": "type is a required field",
             "date": "date is a required field",
-            "parties": "at least two parties are required"
+            "parties": "parties is a required field"
         }
