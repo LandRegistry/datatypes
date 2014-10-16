@@ -6,7 +6,7 @@ sample_geojson_polygon = unicoded({
     "crs": {
         "type": "name",
         "properties": {
-            "name": "urn:ogc:def:crs:EPSG:27700"
+            "name": "urn:ogc:def:crs:EPSG::27700"
         }
     },
 
@@ -56,7 +56,7 @@ sample_geojson_from_migration = unicoded({
     "crs": {
         "type": "name",
         "properties": {
-            "name": "urn:ogc:def:crs:EPSG:27700"
+            "name": "urn:ogc:def:crs:EPSG::27700"
         }
     }
 })
@@ -80,7 +80,7 @@ sample_invalid_geojson = unicoded({
     "crs": {
         "type": "name",
         "properties": {
-            "name": "urn:ogc:def:crs:EPSG:27700"
+            "name": "urn:ogc:def:crs:EPSG::27700"
         }
     }
 })
@@ -90,7 +90,7 @@ sample_lincolns_inn_fields = unicoded({
     "crs": {
         "type": "name",
         "properties": {
-            "name": "urn:ogc:def:crs:EPSG:27700"
+            "name": "urn:ogc:def:crs:EPSG::27700"
         }
     },
     "geometry": {

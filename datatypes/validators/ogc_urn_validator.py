@@ -2,7 +2,7 @@ from voluptuous import Match
 
 from datatypes.core import SingleValueValidator
 
-ogc_urn_schema = Match(pattern='urn:ogc:def:crs:EPSG:\d{4,5}')
+ogc_urn_schema = Match(pattern='urn:ogc:def:crs:EPSG::\d{4,5}')
 
 class OgcUrn(SingleValueValidator):
     def define_schema(self):
