@@ -3,36 +3,36 @@ import unittest
 from copy import deepcopy
 from datatypes import address_validator
 from datatypes.core import DataDoesNotMatchSchemaException
-
+from datatypes.core import unicoded
 
 class TestAddressValidation(unittest.TestCase):
 
     def setUp(self):
 
-        self.address_with_mandatory_fields = {
-            u"full_address" : u"8 Acacia Avenue, Bootata, AL35PU",
-            u"house_no" : u"8",
-            u"street_name" : u"Acacia Avenue",
-            u"town" : u"Bootata",
-            u"postal_county" : u"",
-            u"region_name" : u"Smotania",
-            u"postcode" : u"AL35PU",
-            u"country" : u"Wales"
-        }
+        self.address_with_mandatory_fields = unicoded({
+            "full_address" : "8 Acacia Avenue, Bootata, AL3 5PU",
+            "house_no" : "8",
+            "street_name" : "Acacia Avenue",
+            "town" : "Bootata",
+            "postal_county" : "",
+            "region_name" : "Smotania",
+            "postcode" : "AL3 5PU",
+            "country" : "Wales"
+        })
 
-        self.no_full_address = {
-            u"house_no" : u"8",
-            u"street_name" : u"Acacia Avenue",
-            u"town" : u"Bootata",
-            u"postal_county" : u"",
-            u"region_name" : u"Smotania",
-            u"postcode" : u"AL35PU",
-            u"country": u"Wales"
-        }
+        self.no_full_address = unicoded({
+            "house_no" : "8",
+            "street_name" : "Acacia Avenue",
+            "town" : "Bootata",
+            "postal_county" : "",
+            "region_name" : "Smotania",
+            "postcode" : "AL3 5PU",
+            "country": "Wales"
+        })
 
-        self.without_all_additional_fields = {
-            u"full_address" : u"8 Acacia Avenue, Bootata, AL35PU"
-        }
+        self.without_all_additional_fields = unicoded({
+            "full_address" : "8 Acacia Avenue, Bootata, AL3 5PU"
+        })
 
 
     def test_address_with_no_full_address_fails_validation(self):

@@ -29,7 +29,17 @@ proprietorship = unicoded({
                         "decoration" : "Elegant",
                         "extra_field_to_ignore" : "should not cause validation failure"
                     },
-                    "addresses": object
+                    "addresses": [{
+                        "full_address" : "8 Acacia Avenue, Bootata, AL35PU",
+                        "house_no" : "8",
+                        "street_name" : "Acacia Avenue",
+                        "town" : "Bootata",
+                        "postal_county" : "",
+                        "region_name" : "Smotania",
+                        "postcode" : "AL3 5PU",
+                        "country" : "Wales",
+                        "something": "random which should not matter"
+                    }]
                 }
             ]
         },
@@ -37,13 +47,33 @@ proprietorship = unicoded({
         "notes": []
 })
 
+property_description = unicoded({
+        "template" : "example text",
+        "full_text" : "example text",
+        "fields" : {"addresses": [{
+                    "full_address" : "8 Acacia Avenue, Bootata, AL35PU",
+                    "house_no" : "8",
+                    "street_name" : "Acacia Avenue",
+                    "town" : "Bootata",
+                    "postal_county" : "",
+                    "region_name" : "Smotania",
+                    "postcode" : "AL3 5PU",
+                    "country" : "Wales",
+                    "something": "random which should not matter"
+                }]
+        },
+        "deeds" : [],
+        "notes": []
+})
+
+
 simple_title = unicoded({
     "title_number": "TEST123456789",
     "class_of_title": "Absolute",
     "tenure": "Freehold",
     "edition_date": "20-12-2013",
     "proprietorship": proprietorship,
-    "property_description": dumb_entry,
+    "property_description": property_description,
     "price_paid": dumb_entry,
     "provisions": [],
     "easements":[],
@@ -88,3 +118,23 @@ class TestTitleValidation(unittest.TestCase):
             bad_title = deepcopy(simple_title)
             bad_title[field] = {} # replace dumb entry with empty object
             self.assertRaises(DataDoesNotMatchSchemaException,  title_validator.validate, bad_title)
+
+    def test_cannot_validate_title_if_no_addresses_in_property_description(self):
+        bad_title = deepcopy(simple_title)
+        bad_title["property_description"]["fields"]["addresses"] = [] # replace address entry with empty list
+        self.assertRaises(DataDoesNotMatchSchemaException,  title_validator.validate, bad_title)
+
+    def test_cannot_validate_title_if_addresses_in_property_description_invalid(self):
+        bad_title = deepcopy(simple_title)
+        bad_title["property_description"]["fields"]["addresses"][0]["full_address"] = " "
+        self.assertRaises(DataDoesNotMatchSchemaException, title_validator.validate, bad_title)
+
+    def test_cannot_validate_title_if_addresses_in_proprietorship_invalid(self):
+        bad_title = deepcopy(simple_title)
+        bad_title["proprietorship"]["fields"]["proprietors"][0]["addresses"][0]["full_address"] = " "
+        self.assertRaises(DataDoesNotMatchSchemaException,  title_validator.validate, bad_title)
+
+    def test_cannot_validate_title_if_no_addresses_in_proprietorship(self):
+        bad_title = deepcopy(simple_title)
+        bad_title["proprietorship"]["fields"]["proprietors"][0]["addresses"] = [] # replace address entry with empty list
+        self.assertRaises(DataDoesNotMatchSchemaException,  title_validator.validate, bad_title)

@@ -1,7 +1,6 @@
 from voluptuous import Required, Optional, All, Length, Coerce, Match
 from datatypes.core import DictionaryValidator
-from datatypes.validators import postcode_validator, iso_country_code_validator
-from datatypes.validators.common_validators import NotEmpty
+from datatypes.validators.common_validators import NotEmpty, IsPostcode
 
 
 address_schema = {
@@ -11,7 +10,7 @@ address_schema = {
     Required("town"): All(unicode),
     Required("postal_county"): All(unicode),
     Required("region_name"): All(unicode),
-    Required("postcode"): postcode_validator.postcode_schema,
+    Required("postcode"): All(unicode, IsPostcode()),
     Required("country"): All(unicode)
 }
 

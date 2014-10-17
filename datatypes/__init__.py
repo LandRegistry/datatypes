@@ -8,6 +8,7 @@ from datatypes.validators.entry_validator import Entry
 from datatypes.validators.deed_validator import Deed
 from datatypes.validators.proprietor_validator import Proprietor
 from datatypes.validators.proprietorship_validator import Proprietorship
+from datatypes.validators.property_description_validator import PropertyDescription
 
 price_validator = Price()
 address_validator = Address()
@@ -19,6 +20,7 @@ entry_validator = Entry()
 deed_validator = Deed()
 proprietor_validator = Proprietor()
 proprietorship_validator = Proprietorship()
+property_description_validator = PropertyDescription()
 
 from datatypes.validators.geo_json_validator import GeoJson, GeoJsonString
 

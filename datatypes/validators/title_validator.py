@@ -3,7 +3,7 @@ import datetime
 from voluptuous import Required, All, Optional
 
 from datatypes.core import DictionaryValidator
-from datatypes.validators import geo_json_validator, entry_validator, proprietorship_validator
+from datatypes.validators import geo_json_validator, entry_validator, proprietorship_validator, property_description_validator
 from datatypes.validators.common_validators import Date, NotEmpty
 
 
@@ -21,7 +21,7 @@ title_schema = {
 
     Required("proprietorship"): proprietorship_validator.proprietorship_schema,
 
-    Required("property_description"): entry_validator.entry_schema,
+    Required("property_description"): property_description_validator.property_description_schema,
 
     Required("restrictive_covenants"): [entry_validator.entry_schema],
 
