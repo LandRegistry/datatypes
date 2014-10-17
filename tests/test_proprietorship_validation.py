@@ -15,7 +15,19 @@ proprietorship = unicoded({
                         "full_name" : "Cheesoir",
                         "decoration" : "Elegant"
                     },
-                    "addresses": object
+                    "addresses": [{
+                     "full_address":"27 Baytree Road, Weston-super-Mare SO3 4NE",
+                     "house_no":"27",
+                     "street_name":"Baytree Road",
+                     "town":"Weston-super-Mare",
+                     "postal_county":"",
+                     "region_name":"",
+                     "country":"",
+                     "postcode":"SO3 4NE",
+                     "local_name":"",
+                     "dx_number":"",
+
+                    }]
                 }
             ]
         },
@@ -31,7 +43,8 @@ proprietorship_without_addressess = unicoded({
                         "title" : "Balarot",
                         "full_name" : "Cheesoir",
                         "decoration" : "Elegant"
-                    }
+                    },
+                    "addresses": []
                 }
             ]
         },
@@ -92,4 +105,4 @@ class TestProprietorshipValidation(unittest.TestCase):
         except DataDoesNotMatchSchemaException as e:
             errors = e.field_errors.get("fields.proprietors.addresses")
             self.assertIsNotNone(errors)
-            self.assertEquals(errors, "proprietors address is required")
+            self.assertEquals(errors, "proprietors addresses are required")
