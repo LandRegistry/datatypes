@@ -10,7 +10,7 @@ address_schema = {
     Required("town"): All(unicode),
     Required("postal_county"): All(unicode),
     Required("region_name"): All(unicode),
-    Required("postcode"): All(unicode, IsPostcode()),
+    Optional("postcode"): Optional(unicode, IsPostcode()),
     Required("country"): All(unicode)
 }
 

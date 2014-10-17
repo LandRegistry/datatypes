@@ -34,6 +34,18 @@ class TestAddressValidation(unittest.TestCase):
             "full_address" : "8 Acacia Avenue, Bootata, AL3 5PU"
         })
 
+        self.address_with_empty_postcode = unicoded({
+            "full_address" : "8 Acacia Avenue, Bootata, AL3 5PU",
+            "house_no" : "8",
+            "street_name" : "Acacia Avenue",
+            "town" : "Bootata",
+            "postal_county" : "",
+            "region_name" : "Smotania",
+            "postcode" : "",
+            "country" : "Wales"
+        })
+
+
 
     def test_address_with_no_full_address_fails_validation(self):
         self.assertRaises(DataDoesNotMatchSchemaException, address_validator.validate, self.no_full_address)
@@ -46,7 +58,7 @@ class TestAddressValidation(unittest.TestCase):
         address_with_whitespace_full_address["full_address"] = "    \t \n  "
         self.assertRaises(DataDoesNotMatchSchemaException, address_validator.validate, address_with_whitespace_full_address)
 
-    def test_can_create_address_with_required_mandatory_fields(self):
+    def test_can_validate_address_with_required_mandatory_fields(self):
         try:
             address_validator.validate(self.address_with_mandatory_fields)
         except DataDoesNotMatchSchemaException as e:
@@ -57,4 +69,10 @@ class TestAddressValidation(unittest.TestCase):
             address_validator.validate({})
         except DataDoesNotMatchSchemaException as exception:
             print repr(exception.field_errors)
-            self.assertEquals(len(exception.field_errors), 8)  # we have eight required fields
+            self.assertEquals(len(exception.field_errors), 7)  # we have eight required fields
+
+    def test_can_validate_address_with_empty_postcode(self):
+        try:
+            address_validator.validate(self.address_with_empty_postcode)
+        except DataDoesNotMatchSchemaException as e:
+            self.fail("Could not validate address: " + repr(e))
