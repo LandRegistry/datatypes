@@ -69,7 +69,7 @@ class TestAddressValidation(unittest.TestCase):
             address_validator.validate({})
         except DataDoesNotMatchSchemaException as exception:
             print repr(exception.field_errors)
-            self.assertEquals(len(exception.field_errors), 7)  # we have eight required fields
+            self.assertEquals(len(exception.field_errors), 8)  # we have eight required fields
 
     def test_can_validate_address_with_empty_postcode(self):
         try:
