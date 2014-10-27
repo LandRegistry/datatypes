@@ -8,3 +8,6 @@ htmlcov
 .coverage
 *.iml
 .cache
+.eggs/
+dist/
+lrdatatypes.egg-info

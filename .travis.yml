@@ -5,7 +5,15 @@ install:
 - pip install -r requirements.txt
 - pip install -r requirements_test.txt
 - pip install python-coveralls
-script: 
+script:
 - py.test --cov datatypes tests/ --cov-report=term --cov-report=html
 after_success:
-  - coveralls
+- coveralls
+deploy:
+  provider: pypi
+  user: ashimali
+  password:
+    secure: jI5H2OjYTpTBqhkscp45qcWZsmyOY1fmSHAJe+5quCOQHvQZxZHOiksvn2VQ0CmoB1l+dAekKo5MmMZA7mCklEN8UKgPLq5Mzuz37TF/yzh19+YlQt1gwiC66e4Aq51S7LvwgjG6vMVoz0kZueHhxCX9jYMrCSMv6WaGCc5+GDo=
+  on:
+    tags: true
+    repo: LandRegistry/datatypes
