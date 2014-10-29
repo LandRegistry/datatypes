@@ -12,7 +12,7 @@ Contains the core types, validators and serializers for Land Registry concepts
 **Add the following to your requirements.txt**
 
 ```
-lrdatatypes==0.1
+lrdatatypes==0.1.1
 ```
 
 ### Push new versions to PYPI public repository
